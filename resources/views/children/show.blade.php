@@ -38,7 +38,7 @@
                             <div class="relative w-40 h-40 rounded-[2.5rem] bg-white dark:bg-slate-800 p-1.5 shadow-2xl">
                                 <div class="w-full h-full rounded-[2.2rem] bg-gradient-to-br from-slate-50 to-slate-200 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center overflow-hidden border border-slate-100 dark:border-slate-600">
                                     @if($profilePhoto)
-                                        <img src="{{ asset('storage/' . $profilePhoto->file_path) }}" 
+                                        <img src="{{ Storage::disk('s3')->url($profilePhoto->file_path) }}" 
                                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                              alt="{{ $child->full_name }}">
                                     @else
@@ -195,7 +195,7 @@
                             <div class="group relative rounded-3xl border border-slate-200/50 dark:border-slate-700/50 bg-white dark:bg-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
                                 <div class="aspect-[4/3] bg-slate-50 dark:bg-slate-900 flex items-center justify-center relative overflow-hidden border-b border-slate-100 dark:border-slate-700">
                                     @if(in_array(strtolower(pathinfo($doc->file_path, PATHINFO_EXTENSION)), ['jpg','jpeg','png']))
-                                        <img src="{{ asset('storage/'.$doc->file_path) }}" alt="{{ $doc->document_type }}" 
+                                        <img src="{{ Storage::disk('s3')->url($doc->file_path) }}" alt="{{ $doc->document_type }}" 
                                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                                     @else
                                         <div class="flex flex-col items-center gap-4 group-hover:scale-110 transition-transform duration-500">
@@ -208,10 +208,10 @@
                                     
                                     {{-- Overlay --}}
                                     <div class="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px] flex items-center justify-center gap-3">
-                                        <a href="{{ asset('storage/'.$doc->file_path) }}" target="_blank" class="w-12 h-12 bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center shadow-xl transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-75">
+                                        <a href="{{ Storage::disk('s3')->url($doc->file_path) }}" target="_blank" class="w-12 h-12 bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center shadow-xl transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-75">
                                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                         </a>
-                                        <a href="{{ asset('storage/'.$doc->file_path) }}" download class="w-12 h-12 bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center shadow-xl transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-150">
+                                        <a href="{{ Storage::disk('s3')->url($doc->file_path) }}" download class="w-12 h-12 bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center shadow-xl transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-150">
                                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                         </a>
                                     </div>

@@ -145,7 +145,7 @@
                                         <div class="relative w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 p-1 shadow-sm group-hover/row:scale-110 transition-transform duration-500">
                                             <div class="w-full h-full rounded-[0.9rem] bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center overflow-hidden border border-white/20">
                                                 @if($profilePhoto)
-                                                    <img src="{{ asset('storage/' . $profilePhoto->file_path) }}" class="w-full h-full object-cover" alt="{{ $child->full_name }}">
+                                                    <img src="{{ Storage::disk('s3')->url($profilePhoto->file_path) }}" class="w-full h-full object-cover" alt="{{ $child->full_name }}">
                                                 @else
                                                     <span class="text-white font-black text-sm">{{ substr($child->full_name, 0, 1) }}</span>
                                                 @endif
