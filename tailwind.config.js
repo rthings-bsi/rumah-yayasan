@@ -8,6 +8,9 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './resources/js/**/*.js', // <-- Tambahkan baris ini
+        './resources/js/**/*.vue', // <-- (Opsional) Tambahkan jika kamu pakai Vue
+        './resources/js/**/*.jsx', // <-- (Opsional) Tambahkan jika kamu pakai React
     ],
 
     theme: {
