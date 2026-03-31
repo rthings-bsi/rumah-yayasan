@@ -6,13 +6,13 @@ error_reporting(E_ALL);
 error_log("=== VERCEL BOOT START ===");
 define('LARAVEL_START', microtime(true));
 
-// Ensure APP_KEY is set (Vercel common pitfall)
-if (empty(env('APP_KEY')) && empty($_ENV['APP_KEY']) && empty($_SERVER['APP_KEY'])) {
-    error_log("WARNING: APP_KEY is missing! Cookies and sessions will not work correctly.");
-}
-
 error_log("Requiring autoload...");
 require __DIR__ . '/../vendor/autoload.php';
+
+// Ensure APP_KEY is set (Vercel common pitfall)
+if (empty(getenv('APP_KEY')) && empty($_ENV['APP_KEY']) && empty($_SERVER['APP_KEY'])) {
+    error_log("WARNING: APP_KEY is missing! Cookies and sessions will not work correctly.");
+}
 
 // Set storage to /tmp on Vercel
 $storagePath = '/tmp/storage';
