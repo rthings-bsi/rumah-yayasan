@@ -63,6 +63,18 @@ try {
     error_log("DIAGNOSTIC: Public Path = " . public_path());
     error_log("DIAGNOSTIC: Manifest Path = $manifestPath");
     error_log("DIAGNOSTIC: Manifest Exists = " . ($manifestExists ? "YES" : "NO"));
+    
+    // Check root directory contents
+    $root = base_path();
+    error_log("DIAGNOSTIC: Root Path = $root");
+    error_log("DIAGNOSTIC: Root contents: " . implode(', ', scandir($root)));
+    if (is_dir("$root/public")) {
+        error_log("DIAGNOSTIC: Public contents: " . implode(', ', scandir("$root/public")));
+        if (is_dir("$root/public/build")) {
+            error_log("DIAGNOSTIC: Public/build contents: " . implode(', ', scandir("$root/public/build")));
+        }
+    }
+
     if (!$manifestExists) {
         $altManifest = public_path('build/.vite/manifest.json');
         error_log("DIAGNOSTIC: Checking alt manifest: $altManifest (" . (file_exists($altManifest) ? "YES" : "NO") . ")");
