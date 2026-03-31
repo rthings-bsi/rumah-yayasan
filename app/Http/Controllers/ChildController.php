@@ -68,7 +68,8 @@ class ChildController extends Controller
         if ($request->has('documents')) {
             foreach ($request->file('documents') as $key => $fileData) {
                 if (isset($fileData['file'])) {
-                    $path = $fileData['file']->store('documents', 'public');
+                    // UBAH DISINI: Ganti 'public' menjadi 's3' agar tersimpan di Supabase
+                    $path = $fileData['file']->store('documents', 's3');
                     $child->documents()->create([
                         'document_type' => $request->documents[$key]['type'],
                         'file_path'     => $path
@@ -111,7 +112,8 @@ class ChildController extends Controller
         if ($request->has('documents')) {
             foreach ($request->file('documents') as $key => $fileData) {
                 if (isset($fileData['file'])) {
-                    $path = $fileData['file']->store('documents', 'public');
+                    // UBAH DISINI: Ganti 'public' menjadi 's3'
+                    $path = $fileData['file']->store('documents', 's3');
                     $child->documents()->create([
                         'document_type' => $request->documents[$key]['type'],
                         'file_path'     => $path
@@ -126,7 +128,8 @@ class ChildController extends Controller
     public function destroy(Child $child)
     {
         foreach ($child->documents as $doc) {
-            Storage::disk('public')->delete($doc->file_path);
+            // UBAH DISINI: Hapus file dari disk s3 (Supabase)
+            Storage::disk('s3')->delete($doc->file_path);
         }
         $child->delete();
         return redirect()->route('children.index')->with('success', 'Child deleted successfully.');
@@ -142,11 +145,14 @@ class ChildController extends Controller
         $child->load('documents');
 
         foreach ($child->documents as $doc) {
-            $fullPath = storage_path('app/public/' . $doc->file_path);
-            if (file_exists($fullPath)) {
-                $ext = pathinfo($fullPath, PATHINFO_EXTENSION);
+            // UBAH DISINI: Mengambil gambar base64 langsung dari S3 Supabase
+            $path = $doc->file_path;
+            
+            if (Storage::disk('s3')->exists($path)) {
+                $ext = pathinfo($path, PATHINFO_EXTENSION);
                 if (in_array(strtolower($ext), ['jpg', 'jpeg', 'png'])) {
-                    $doc->base64_image = 'data:image/' . $ext . ';base64,' . base64_encode(file_get_contents($fullPath));
+                    $fileContent = Storage::disk('s3')->get($path);
+                    $doc->base64_image = 'data:image/' . $ext . ';base64,' . base64_encode($fileContent);
                 }
             }
         }
