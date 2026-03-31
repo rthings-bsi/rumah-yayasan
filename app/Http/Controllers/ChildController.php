@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Child;
+use App\Models\Asrama;
 use App\Models\ChildDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +15,7 @@ class ChildController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Child::query();
+        $query = Child::query()->with(['asrama', 'documents']);
 
         $search = $request->search;
         if ($request->filled('search')) {
@@ -22,29 +23,44 @@ class ChildController extends Controller
                   ->orWhere('registration_number', 'like', "%{$search}%");
         }
 
-        $children = $query->paginate(15);
-        return view('children.index', compact('children', 'search'));
+        if ($request->filled('asrama_id')) {
+            $query->where('asrama_id', $request->asrama_id);
+        }
+
+        $children = $query->paginate(15)->withQueryString();
+        $asramas  = Asrama::orderBy('kode_asrama')->get();
+
+        $stats = [
+            'total'  => Child::count(),
+            'male'   => Child::where('gender', 'male')->count(),
+            'female' => Child::where('gender', 'female')->count(),
+            'active' => Child::where('enrollment_status', 'active')->count(),
+        ];
+
+        return view('children.index', compact('children', 'search', 'asramas', 'stats'));
     }
 
     public function create()
     {
-        return view('children.create');
+        $asramas = Asrama::orderBy('kode_asrama')->get();
+        return view('children.create', compact('asramas'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'registration_number' => 'required|string|unique:children,registration_number',
-            'full_name' => 'required|string|max:255',
-            'place_of_birth' => 'required|string|max:255',
-            'date_of_birth' => 'required|date',
-            'gender' => 'required|in:male,female',
-            'category' => 'required|in:fatherless,motherless,orphan,underprivileged',
-            'enrollment_status' => 'required|in:active,graduated,withdrawn',
-            'admission_date' => 'required|date',
-            'documents' => 'nullable|array',
-            'documents.*.type' => 'required_with:documents|string|in:profile_photo,birth_certificate,family_card,guardian_id',
-            'documents.*.file' => 'required_with:documents|file|mimes:jpg,jpeg,png,pdf|max:2048'
+            'full_name'           => 'required|string|max:255',
+            'place_of_birth'      => 'required|string|max:255',
+            'date_of_birth'       => 'required|date',
+            'gender'              => 'required|in:male,female',
+            'category'            => 'required|in:fatherless,motherless,orphan,underprivileged',
+            'enrollment_status'   => 'required|in:active,graduated,withdrawn',
+            'admission_date'      => 'required|date',
+            'asrama_id'           => 'nullable|exists:asramas,id',
+            'documents'           => 'nullable|array',
+            'documents.*.type'    => 'required_with:documents|string|in:profile_photo,birth_certificate,family_card,guardian_id',
+            'documents.*.file'    => 'required_with:documents|file|mimes:jpg,jpeg,png,pdf|max:2048'
         ]);
 
         $child = Child::create($request->except('documents'));
@@ -55,7 +71,7 @@ class ChildController extends Controller
                     $path = $fileData['file']->store('documents', 'public');
                     $child->documents()->create([
                         'document_type' => $request->documents[$key]['type'],
-                        'file_path' => $path
+                        'file_path'     => $path
                     ]);
                 }
             }
@@ -66,26 +82,28 @@ class ChildController extends Controller
 
     public function show(Child $child)
     {
-        $child->load('documents');
+        $child->load('documents', 'asrama');
         return view('children.show', compact('child'));
     }
 
     public function edit(Child $child)
     {
-        return view('children.edit', compact('child'));
+        $asramas = Asrama::orderBy('kode_asrama')->get();
+        return view('children.edit', compact('child', 'asramas'));
     }
 
     public function update(Request $request, Child $child)
     {
         $validated = $request->validate([
             'registration_number' => 'required|string|unique:children,registration_number,'.$child->id,
-            'full_name' => 'required|string|max:255',
-            'place_of_birth' => 'required|string|max:255',
-            'date_of_birth' => 'required|date',
-            'gender' => 'required|in:male,female',
-            'category' => 'required|in:fatherless,motherless,orphan,underprivileged',
-            'enrollment_status' => 'required|in:active,graduated,withdrawn',
-            'admission_date' => 'required|date',
+            'full_name'           => 'required|string|max:255',
+            'place_of_birth'      => 'required|string|max:255',
+            'date_of_birth'       => 'required|date',
+            'gender'              => 'required|in:male,female',
+            'category'            => 'required|in:fatherless,motherless,orphan,underprivileged',
+            'enrollment_status'   => 'required|in:active,graduated,withdrawn',
+            'admission_date'      => 'required|date',
+            'asrama_id'           => 'nullable|exists:asramas,id',
         ]);
 
         $child->update($validated);
@@ -96,7 +114,7 @@ class ChildController extends Controller
                     $path = $fileData['file']->store('documents', 'public');
                     $child->documents()->create([
                         'document_type' => $request->documents[$key]['type'],
-                        'file_path' => $path
+                        'file_path'     => $path
                     ]);
                 }
             }
@@ -123,7 +141,6 @@ class ChildController extends Controller
     {
         $child->load('documents');
 
-        // Convert document images to base64 for DomPDF
         foreach ($child->documents as $doc) {
             $fullPath = storage_path('app/public/' . $doc->file_path);
             if (file_exists($fullPath)) {
@@ -138,5 +155,33 @@ class ChildController extends Controller
                   ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
         
         return $pdf->stream('child-profile-' . $child->registration_number . '.pdf');
+    }
+
+    public function generateRegistrationNumber(Request $request)
+    {
+        $asramaId = $request->asrama_id;
+        $date = now();
+        $month = $date->format('m');
+        $year = $date->format('Y');
+
+        if (!$asramaId) {
+            return response()->json(['registration_number' => '']);
+        }
+
+        $asrama = Asrama::findOrFail($asramaId);
+        $prefix = $asrama->kode_asrama;
+
+        // Count children in this asrama registered in this month and year
+        // We use created_at to determine the "running ID" for that period
+        $count = Child::where('asrama_id', $asramaId)
+            ->whereMonth('created_at', $month)
+            ->whereYear('created_at', $year)
+            ->count();
+
+        $nextId = str_pad($count + 1, 3, '0', STR_PAD_LEFT);
+
+        return response()->json([
+            'registration_number' => "{$prefix}{$month}{$year}{$nextId}"
+        ]);
     }
 }

@@ -113,6 +113,68 @@
                 <div x-show="sidebarCollapsed && !isMobile" class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
             @endif
         </a>
+
+        <!-- Asrama Data -->
+        <a href="{{ route('asramas.index') }}" 
+           @click="if(isMobile) sidebarOpen = false"
+           class="flex items-center rounded-xl transition-all duration-200 group relative
+           {{ request()->routeIs('asramas.*') 
+              ? 'bg-indigo-500/10 text-white' 
+              : 'text-slate-400 hover:bg-white/[0.06] hover:text-slate-200 active:bg-white/[0.08]' }}"
+           :class="sidebarCollapsed && !isMobile ? 'px-0 py-2.5 justify-center' : 'px-3.5 py-3'"
+           :title="sidebarCollapsed && !isMobile ? '{{ __('Data Asrama') }}' : ''">
+            <div class="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200
+                {{ request()->routeIs('asramas.*') 
+                   ? 'bg-indigo-500/20 text-indigo-400' 
+                   : 'text-slate-500 group-hover:text-slate-300' }}"
+                :class="sidebarCollapsed && !isMobile ? 'mr-0' : 'mr-3'">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            </div>
+            <span x-show="!sidebarCollapsed || isMobile" 
+                  x-transition:enter="transition-opacity duration-200 delay-100" 
+                  x-transition:enter-start="opacity-0" 
+                  x-transition:enter-end="opacity-100" 
+                  x-transition:leave="transition-opacity duration-100" 
+                  x-transition:leave-start="opacity-100" 
+                  x-transition:leave-end="opacity-0" 
+                  class="font-medium text-sm whitespace-nowrap">{{ __('Data Asrama') }}</span>
+            @if(request()->routeIs('asramas.*'))
+                <div x-show="!sidebarCollapsed || isMobile" class="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
+                <div x-show="sidebarCollapsed && !isMobile" class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
+            @endif
+        </a>
+
+        @if(auth()->user()->role === 'admin')
+            <!-- User Management -->
+            <a href="{{ route('users.index') }}" 
+               @click="if(isMobile) sidebarOpen = false"
+               class="flex items-center rounded-xl transition-all duration-200 group relative
+               {{ request()->routeIs('users.*') 
+                  ? 'bg-indigo-500/10 text-white' 
+                  : 'text-slate-400 hover:bg-white/[0.06] hover:text-slate-200 active:bg-white/[0.08]' }}"
+               :class="sidebarCollapsed && !isMobile ? 'px-0 py-2.5 justify-center' : 'px-3.5 py-3'"
+               :title="sidebarCollapsed && !isMobile ? '{{ __('Manage Users') }}' : ''">
+                <div class="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200
+                    {{ request()->routeIs('users.*') 
+                       ? 'bg-indigo-500/20 text-indigo-400' 
+                       : 'text-slate-500 group-hover:text-slate-300' }}"
+                    :class="sidebarCollapsed && !isMobile ? 'mr-0' : 'mr-3'">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </div>
+                <span x-show="!sidebarCollapsed || isMobile" 
+                      x-transition:enter="transition-opacity duration-200 delay-100" 
+                      x-transition:enter-start="opacity-0" 
+                      x-transition:enter-end="opacity-100" 
+                      x-transition:leave="transition-opacity duration-100" 
+                      x-transition:leave-start="opacity-100" 
+                      x-transition:leave-end="opacity-0" 
+                      class="font-medium text-sm whitespace-nowrap">{{ __('Manage Users') }}</span>
+                @if(request()->routeIs('users.*'))
+                    <div x-show="!sidebarCollapsed || isMobile" class="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
+                    <div x-show="sidebarCollapsed && !isMobile" class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
+                @endif
+            </a>
+        @endif
     </nav>
     
     <!-- User Footer -->

@@ -12,11 +12,17 @@ class Child extends Model
 
     protected $fillable = [
         'registration_number', 'full_name', 'place_of_birth',
-        'date_of_birth', 'gender', 'category', 'enrollment_status', 'admission_date'
+        'date_of_birth', 'gender', 'category', 'enrollment_status', 'admission_date',
+        'asrama_id'
     ];
 
     public function documents()
     {
         return $this->hasMany(ChildDocument::class);
+    }
+
+    public function asrama()
+    {
+        return $this->belongsTo(Asrama::class);
     }
 }
