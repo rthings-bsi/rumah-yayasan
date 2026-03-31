@@ -56,6 +56,18 @@ if (isset($_SERVER['HTTP_X_Vercel_Forwarded_For']) || isset($_SERVER['HTTP_X_FOR
 error_log("Handling request...");
 try {
     $request = Illuminate\Http\Request::capture();
+    
+    // Diagnostic: Check if manifest exists
+    $manifestPath = public_path('build/manifest.json');
+    $manifestExists = file_exists($manifestPath);
+    error_log("DIAGNOSTIC: Public Path = " . public_path());
+    error_log("DIAGNOSTIC: Manifest Path = $manifestPath");
+    error_log("DIAGNOSTIC: Manifest Exists = " . ($manifestExists ? "YES" : "NO"));
+    if (!$manifestExists) {
+        $altManifest = public_path('build/.vite/manifest.json');
+        error_log("DIAGNOSTIC: Checking alt manifest: $altManifest (" . (file_exists($altManifest) ? "YES" : "NO") . ")");
+    }
+
     $app->handleRequest($request);
     error_log("Request handled successfully: " . $request->fullUrl());
 } catch (\Throwable $e) {
