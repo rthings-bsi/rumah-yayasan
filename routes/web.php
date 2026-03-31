@@ -21,7 +21,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('children', ChildController::class)->except(['index', 'show']);
         Route::resource('asramas', AsramaController::class)->except(['index', 'show']);
         Route::resource('users', UserController::class);
+        Route::delete('/children/documents/{document}', [ChildController::class, 'destroyDocument'])->name('children.documents.destroy');
     });
+
 
     // Accessible by User and Admin
     Route::get('/children', [ChildController::class, 'index'])->name('children.index');

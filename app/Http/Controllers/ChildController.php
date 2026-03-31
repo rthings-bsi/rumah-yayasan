@@ -135,6 +135,14 @@ class ChildController extends Controller
         return redirect()->route('children.index')->with('success', 'Child deleted successfully.');
     }
 
+    public function destroyDocument(ChildDocument $document)
+    {
+        Storage::disk('s3')->delete($document->file_path);
+        $document->delete();
+        return back()->with('success', 'Document deleted successfully.');
+    }
+
+
     public function export(Request $request)
     {
         return Excel::download(new ChildrenExport($request->search), 'children.xlsx');

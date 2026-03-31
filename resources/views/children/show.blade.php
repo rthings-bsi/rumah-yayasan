@@ -214,7 +214,17 @@
                                         <a href="{{ Storage::disk('s3')->url($doc->file_path) }}" download class="w-12 h-12 bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center shadow-xl transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-150">
                                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                         </a>
+                                        @if(auth()->user()->role === 'admin')
+                                        <form action="{{ route('children.documents.destroy', $doc) }}" method="POST" class="inline" onsubmit="return confirm('{{ __('Hapus dokumen ini?') }}')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="w-12 h-12 bg-white dark:bg-slate-800 text-rose-600 dark:text-rose-400 rounded-2xl flex items-center justify-center shadow-xl transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 delay-[225ms]">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                            </button>
+                                        </form>
+                                        @endif
                                     </div>
+
                                 </div>
                                 <div class="p-5">
                                     <h4 class="text-sm font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider truncate">{{ str_replace('_', ' ', $doc->document_type) }}</h4>
