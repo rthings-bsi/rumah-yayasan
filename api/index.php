@@ -26,8 +26,9 @@ $_SERVER['APP_EVENTS_CACHE'] = $storagePath . '/bootstrap/cache/events.php';
 error_log("Bootstrapping app...");
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-error_log("Setting storage path...");
+error_log("Setting paths...");
 $app->useStoragePath($storagePath);
+$app->usePublicPath(__DIR__ . '/../public');
 
 $directories = [
     "$storagePath/app/public",
