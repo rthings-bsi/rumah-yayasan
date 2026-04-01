@@ -28,8 +28,8 @@
     <div class="flex items-center justify-between border-b border-white/[0.06] transition-all duration-300"
          :class="sidebarCollapsed && !isMobile ? 'px-4 py-6' : 'px-5 py-6'">
         <div class="flex items-center gap-3">
-            <div class="p-2.5 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg shadow-indigo-500/25 flex-shrink-0">
-                <x-application-logo class="w-7 h-7 fill-current text-white" />
+            <div class="p-2 bg-white/10 backdrop-blur-md rounded-2xl shadow-xl border border-white/10 flex-shrink-0 group-hover:scale-110 transition-transform duration-500">
+                <x-application-logo class="w-8 h-8" />
             </div>
             <div x-show="!sidebarCollapsed || isMobile" 
                  x-transition:enter="transition-opacity duration-200 delay-100" 
@@ -68,7 +68,7 @@
                    ? 'bg-indigo-500/20 text-indigo-400' 
                    : 'text-slate-500 group-hover:text-slate-300' }}"
                 :class="sidebarCollapsed && !isMobile ? 'mr-0' : 'mr-3'">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
             </div>
             <span x-show="!sidebarCollapsed || isMobile" 
                   x-transition:enter="transition-opacity duration-200 delay-100" 
@@ -98,7 +98,7 @@
                    ? 'bg-indigo-500/20 text-indigo-400' 
                    : 'text-slate-500 group-hover:text-slate-300' }}"
                 :class="sidebarCollapsed && !isMobile ? 'mr-0' : 'mr-3'">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
             <span x-show="!sidebarCollapsed || isMobile" 
                   x-transition:enter="transition-opacity duration-200 delay-100" 
@@ -128,7 +128,7 @@
                    ? 'bg-indigo-500/20 text-indigo-400' 
                    : 'text-slate-500 group-hover:text-slate-300' }}"
                 :class="sidebarCollapsed && !isMobile ? 'mr-0' : 'mr-3'">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>
             </div>
             <span x-show="!sidebarCollapsed || isMobile" 
                   x-transition:enter="transition-opacity duration-200 delay-100" 
@@ -159,7 +159,7 @@
                        ? 'bg-indigo-500/20 text-indigo-400' 
                        : 'text-slate-500 group-hover:text-slate-300' }}"
                     :class="sidebarCollapsed && !isMobile ? 'mr-0' : 'mr-3'">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
                 <span x-show="!sidebarCollapsed || isMobile" 
                       x-transition:enter="transition-opacity duration-200 delay-100" 
