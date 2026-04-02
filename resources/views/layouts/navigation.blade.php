@@ -177,6 +177,25 @@
         @endif
     </nav>
     
+    <!-- Language Switching -->
+    <div class="border-t border-white/[0.06] transition-all duration-300" :class="sidebarCollapsed && !isMobile ? 'p-2' : 'p-4'">
+        <p x-show="!sidebarCollapsed || isMobile" class="px-3 text-[10px] font-bold text-slate-500/80 uppercase tracking-[0.15em] mb-3 whitespace-nowrap">{{ __('Language') }}</p>
+        <div class="flex items-center bg-white/5 rounded-xl p-1 gap-1">
+            <a href="{{ route('language.switch', 'en') }}" 
+               class="flex-1 flex items-center justify-center py-1.5 rounded-lg text-[10px] font-black transition-all duration-200 
+               {{ app()->getLocale() == 'en' ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-500 hover:text-slate-300' }}"
+               title="English">
+                EN
+            </a>
+            <a href="{{ route('language.switch', 'id') }}" 
+               class="flex-1 flex items-center justify-center py-1.5 rounded-lg text-[10px] font-black transition-all duration-200 
+               {{ app()->getLocale() == 'id' ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20' : 'text-slate-500 hover:text-slate-300' }}"
+               title="Bahasa Indonesia">
+                ID
+            </a>
+        </div>
+    </div>
+
     <!-- User Footer -->
     <div class="border-t border-white/[0.06] space-y-1 transition-all duration-300" :class="sidebarCollapsed && !isMobile ? 'p-2' : 'p-3'">
         <!-- User Info -->

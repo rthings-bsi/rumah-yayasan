@@ -147,13 +147,107 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {{-- Left Column: Information --}}
             <div class="lg:col-span-2 space-y-12">
-                {{-- Personal Details --}}
+                {{-- Biological & Legal Identity --}}
                 <div class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-8 border-transparent animate-fade-in-up delay-150">
                     <div class="flex items-center gap-4 mb-8">
                         <div class="icon-box indigo shadow-lg shadow-indigo-500/10">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
                         </div>
-                        <h3 class="text-2xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('Admission & Records') }}</h3>
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('Biological & Legal Identity') }}</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                            <p class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em] mb-1">{{ __('National ID (NIK)') }}</p>
+                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200 font-mono tracking-wider">{{ $child->nik ?: '-' }}</p>
+                        </div>
+                        <div class="p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                            <p class="text-[10px] font-black text-blue-500 uppercase tracking-[0.2em] mb-1">{{ __('Family Card (KK)') }}</p>
+                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200 font-mono tracking-wider">{{ $child->no_kk ?: '-' }}</p>
+                        </div>
+                        <div class="p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                            <p class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.2em] mb-1">{{ __('Gender') }}</p>
+                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200 capitalize">{{ $child->gender }}</p>
+                        </div>
+                        <div class="p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                            <p class="text-[10px] font-black text-amber-500 uppercase tracking-[0.2em] mb-1">{{ __('Birth Details') }}</p>
+                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200 capitalize">{{ $child->place_of_birth }}, {{ \Carbon\Carbon::parse($child->date_of_birth)->format('d F Y') }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Family & Guardianship --}}
+                <div class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-8 border-transparent animate-fade-in-up delay-200">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="icon-box sky shadow-lg shadow-sky-500/10">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('Family & Guardianship') }}</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm col-span-1">
+                            <p class="text-[10px] font-black text-sky-500 uppercase tracking-[0.2em] mb-1">{{ __('Father\'s Name') }}</p>
+                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200 capitalize">{{ $child->father_name ?: '-' }}</p>
+                        </div>
+                        <div class="p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm col-span-1">
+                            <p class="text-[10px] font-black text-rose-500 uppercase tracking-[0.2em] mb-1">{{ __('Mother\'s Name') }}</p>
+                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200 capitalize">{{ $child->mother_name ?: '-' }}</p>
+                        </div>
+                        <div class="p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm col-span-2">
+                            <p class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.2em] mb-1">{{ __('Parent/Guardian Contact') }}</p>
+                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200">{{ $child->parent_phone_number ?: '-' }}</p>
+                        </div>
+                        <div class="p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm col-span-2">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{{ __('Home Address') }}</p>
+                            <p class="text-base font-bold text-slate-700 dark:text-slate-200 italic leading-relaxed">{{ $child->address ?: '-' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Academic & Education --}}
+                <div class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-8 border-transparent animate-fade-in-up delay-[250ms]">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="icon-box violet shadow-lg shadow-violet-500/10">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4 2.222"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('Academic & Education') }}</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                            <p class="text-[10px] font-black text-violet-500 uppercase tracking-[0.2em] mb-1">{{ __('Level') }}</p>
+                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200 capitalize">
+                                @switch($child->education_level)
+                                    @case('BS') Belum Sekolah @break
+                                    @case('SD') SD/MI @break
+                                    @case('SMP') SMP/MTs @break
+                                    @case('SMA') SMA/SMK @break
+                                    @default {{ $child->education_level ?: '-' }}
+                                @endswitch
+                            </p>
+                        </div>
+                        <div class="p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                            <p class="text-[10px] font-black text-fuchsia-500 uppercase tracking-[0.2em] mb-1">{{ __('Class') }}</p>
+                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200">{{ $child->class_level ?: '-' }}</p>
+                        </div>
+                        <div class="p-5 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                            <p class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.2em] mb-1">{{ __('Economic Grade') }}</p>
+                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200">
+                                Grade {{ $child->grade ?: '-' }}
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Administrative History --}}
+                <div class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-8 border-transparent animate-fade-in-up delay-300">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="icon-box emerald shadow-lg shadow-emerald-500/10">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('Administrative History') }}</h3>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -162,8 +256,8 @@
                             <p class="text-lg font-bold text-slate-700 dark:text-slate-200">{{ \Carbon\Carbon::parse($child->admission_date)->format('l, d F Y') }}</p>
                         </div>
                         <div class="group p-6 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
-                            <p class="text-xs font-black text-blue-500 uppercase tracking-widest mb-2">{{ __('Place of Birth') }}</p>
-                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200">{{ $child->place_of_birth }}</p>
+                            <p class="text-xs font-black text-blue-500 uppercase tracking-widest mb-2">{{ __('Recommended By') }}</p>
+                            <p class="text-lg font-bold text-slate-700 dark:text-slate-200 capitalize">{{ $child->recommended_by ?: '-' }}</p>
                         </div>
                         <div class="group p-6 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
                             <p class="text-xs font-black text-emerald-500 uppercase tracking-widest mb-2">{{ __('Current Status') }}</p>

@@ -86,8 +86,85 @@
                     </div>
                 </div>
 
-                {{-- Section 2: Administrative Details --}}
+                {{-- Section 2: Family & Identity --}}
                 <div class="p-8 border-b border-slate-100 dark:border-slate-800/50 animate-fade-in-up delay-75">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="icon-box sky !w-12 !h-12 !rounded-2xl shadow-lg shadow-sky-500/10">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('Family & Identity') }}</h3>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ __('Legal & Guardianship Records') }}</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-2">
+                        <div>
+                            <label class="form-label-modern !text-[10px] !font-black !uppercase !tracking-[0.2em] !text-slate-400 mb-2">{{ __('NIK') }}</label>
+                            <input type="text" name="nik" value="{{ old('nik', $child->nik) }}" class="form-input-modern !rounded-2xl border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:!ring-indigo-500/20" placeholder="16-digit NIK">
+                        </div>
+                        <div>
+                            <label class="form-label-modern !text-[10px] !font-black !uppercase !tracking-[0.2em] !text-slate-400 mb-2">{{ __('Family Card Number (KK)') }}</label>
+                            <input type="text" name="no_kk" value="{{ old('no_kk', $child->no_kk) }}" class="form-input-modern !rounded-2xl border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:!ring-indigo-500/20" placeholder="16-digit KK Number">
+                        </div>
+                        <div>
+                            <label class="form-label-modern !text-[10px] !font-black !uppercase !tracking-[0.2em] !text-slate-400 mb-2">{{ __('Father\'s Name') }}</label>
+                            <input type="text" name="father_name" value="{{ old('father_name', $child->father_name) }}" class="form-input-modern !rounded-2xl border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:!ring-indigo-500/20" placeholder="{{ __('Full Name') }}">
+                        </div>
+                        <div>
+                            <label class="form-label-modern !text-[10px] !font-black !uppercase !tracking-[0.2em] !text-slate-400 mb-2">{{ __('Mother\'s Name') }}</label>
+                            <input type="text" name="mother_name" value="{{ old('mother_name', $child->mother_name) }}" class="form-input-modern !rounded-2xl border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:!ring-indigo-500/20" placeholder="{{ __('Full Name') }}">
+                        </div>
+                        <div>
+                            <label class="form-label-modern !text-[10px] !font-black !uppercase !tracking-[0.2em] !text-slate-400 mb-2">{{ __('Parent/Guardian Phone') }}</label>
+                            <input type="text" name="parent_phone_number" value="{{ old('parent_phone_number', $child->parent_phone_number) }}" class="form-input-modern !rounded-2xl border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:!ring-indigo-500/20" placeholder="Ex: 08123456789">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="form-label-modern !text-[10px] !font-black !uppercase !tracking-[0.2em] !text-slate-400 mb-2">{{ __('Full Address') }}</label>
+                            <textarea name="address" rows="3" class="form-input-modern !rounded-2xl border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:!ring-indigo-500/20" placeholder="{{ __('Complete address based on KK/KTP') }}">{{ old('address', $child->address) }}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Section 3: Education --}}
+                <div class="p-8 border-b border-slate-100 dark:border-slate-800/50 bg-slate-50/50 dark:bg-slate-800/20 animate-fade-in-up delay-100">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="icon-box violet !w-12 !h-12 !rounded-2xl shadow-lg shadow-violet-500/10">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4 2.222"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('Education Details') }}</h3>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ __('Academic Information') }}</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pb-2">
+                        <div>
+                            <label class="form-label-modern !text-[10px] !font-black !uppercase !tracking-[0.2em] !text-slate-400 mb-2">{{ __('Education Level') }}</label>
+                            <select name="education_level" class="form-input-modern !rounded-2xl border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:!ring-indigo-500/20">
+                                <option value="BS" {{ old('education_level', $child->education_level) == 'BS' ? 'selected' : '' }}>{{ __('Belum Sekolah (BS)') }}</option>
+                                <option value="TK" {{ old('education_level', $child->education_level) == 'TK' ? 'selected' : '' }}>{{ __('TK') }}</option>
+                                <option value="SD" {{ old('education_level', $child->education_level) == 'SD' ? 'selected' : '' }}>{{ __('SD/MI') }}</option>
+                                <option value="SMP" {{ old('education_level', $child->education_level) == 'SMP' ? 'selected' : '' }}>{{ __('SMP/MTs') }}</option>
+                                <option value="SMA" {{ old('education_level', $child->education_level) == 'SMA' ? 'selected' : '' }}>{{ __('SMA/SMK/MA') }}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label-modern !text-[10px] !font-black !uppercase !tracking-[0.2em] !text-slate-400 mb-2">{{ __('Class Level') }}</label>
+                            <input type="text" name="class_level" value="{{ old('class_level', $child->class_level) }}" class="form-input-modern !rounded-2xl border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:!ring-indigo-500/20" placeholder="1-12 / -">
+                        </div>
+                        <div>
+                            <label class="form-label-modern !text-[10px] !font-black !uppercase !tracking-[0.2em] !text-slate-400 mb-2">{{ __('Economic Grade') }}</label>
+                            <select name="grade" class="form-input-modern !rounded-2xl border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:!ring-indigo-500/20">
+                                <option value="A" {{ old('grade', $child->grade) == 'A' ? 'selected' : '' }}>{{ __('Grade A') }}</option>
+                                <option value="B" {{ old('grade', $child->grade) == 'B' ? 'selected' : '' }}>{{ __('Grade B') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Section 4: Administrative Details --}}
+                <div class="p-8 border-b border-slate-100 dark:border-slate-800/50 animate-fade-in-up delay-[125ms]">
                     <div class="flex items-center gap-4 mb-8">
                         <div class="icon-box emerald !w-12 !h-12 !rounded-2xl shadow-lg shadow-emerald-500/10">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -118,6 +195,10 @@
                                     <svg class="w-3.5 h-3.5 text-slate-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            <label class="form-label-modern !text-[10px] !font-black !uppercase !tracking-[0.2em] !text-slate-400 mb-2">{{ __('Recommended By') }}</label>
+                            <input type="text" name="recommended_by" value="{{ old('recommended_by', $child->recommended_by) }}" class="form-input-modern !rounded-2xl border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:!ring-indigo-500/20" placeholder="{{ __('Name of Recommender') }}">
                         </div>
                         <div>
                             <label class="form-label-modern !text-[10px] !font-black !uppercase !tracking-[0.2em] !text-slate-400 mb-2">{{ __('Enrollment Status') }}</label>

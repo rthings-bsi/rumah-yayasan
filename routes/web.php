@@ -35,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Asrama Routes (accessible by all)
     Route::get('/asramas', [AsramaController::class, 'index'])->name('asramas.index');
     Route::get('/asramas/{asrama}', [AsramaController::class, 'show'])->name('asramas.show');
+    Route::get('/language/{locale}', [\App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');
 });
 
 Route::middleware('auth')->group(function () {

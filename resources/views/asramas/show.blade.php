@@ -33,6 +33,10 @@
                     <h1 class="text-3xl font-black text-slate-900 dark:text-white mt-1">{{ $asrama->nama_asrama }}</h1>
                 </div>
                 <div class="flex gap-3 mb-2">
+                    <a href="{{ route('children.export', ['asrama_id' => $asrama->id]) }}" class="btn btn-secondary shadow-indigo-500/10 h-12 flex items-center gap-2 !bg-emerald-600 hover:!bg-emerald-700 !text-white !border-none">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        {{ __('Download Excel') }}
+                    </a>
                     <a href="{{ route('children.create', ['asrama_id' => $asrama->id]) }}" class="btn btn-primary shadow-indigo-500/10 h-12">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                         {{ __('Tambah Anak Ke Sini') }}

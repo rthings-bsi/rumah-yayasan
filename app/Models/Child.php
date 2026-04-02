@@ -11,8 +11,9 @@ class Child extends Model
     use HasFactory;
 
     protected $fillable = [
-        'registration_number', 'full_name', 'place_of_birth',
-        'date_of_birth', 'gender', 'category', 'enrollment_status', 'admission_date',
+        'registration_number', 'full_name', 'nik', 'no_kk', 'address', 'father_name', 'mother_name',
+        'grade', 'education_level', 'class_level', 'recommended_by', 'parent_phone_number',
+        'place_of_birth', 'date_of_birth', 'gender', 'category', 'enrollment_status', 'admission_date',
         'asrama_id'
     ];
 

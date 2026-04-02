@@ -51,6 +51,16 @@ class ChildController extends Controller
         $validated = $request->validate([
             'registration_number' => 'required|string|unique:children,registration_number',
             'full_name'           => 'required|string|max:255',
+            'nik'                 => 'nullable|string|max:16',
+            'no_kk'               => 'nullable|string|max:16',
+            'address'             => 'nullable|string',
+            'father_name'         => 'nullable|string|max:255',
+            'mother_name'         => 'nullable|string|max:255',
+            'grade'               => 'nullable|in:A,B',
+            'education_level'     => 'nullable|in:BS,TK,SD,SMP,SMA',
+            'class_level'         => 'nullable|string|max:50',
+            'recommended_by'      => 'nullable|string|max:255',
+            'parent_phone_number' => 'nullable|string|max:15',
             'place_of_birth'      => 'required|string|max:255',
             'date_of_birth'       => 'required|date',
             'gender'              => 'required|in:male,female',
@@ -78,7 +88,7 @@ class ChildController extends Controller
             }
         }
 
-        return redirect()->route('children.index')->with('success', 'Child record created successfully.');
+        return redirect()->route('children.index')->with('success', __('Child record created successfully.'));
     }
 
     public function show(Child $child)
@@ -98,6 +108,16 @@ class ChildController extends Controller
         $validated = $request->validate([
             'registration_number' => 'required|string|unique:children,registration_number,'.$child->id,
             'full_name'           => 'required|string|max:255',
+            'nik'                 => 'nullable|string|max:16',
+            'no_kk'               => 'nullable|string|max:16',
+            'address'             => 'nullable|string',
+            'father_name'         => 'nullable|string|max:255',
+            'mother_name'         => 'nullable|string|max:255',
+            'grade'               => 'nullable|in:A,B',
+            'education_level'     => 'nullable|in:BS,TK,SD,SMP,SMA',
+            'class_level'         => 'nullable|string|max:50',
+            'recommended_by'      => 'nullable|string|max:255',
+            'parent_phone_number' => 'nullable|string|max:15',
             'place_of_birth'      => 'required|string|max:255',
             'date_of_birth'       => 'required|date',
             'gender'              => 'required|in:male,female',
@@ -122,7 +142,7 @@ class ChildController extends Controller
             }
         }
 
-        return redirect()->route('children.index')->with('success', 'Child updated successfully.');
+        return redirect()->route('children.index')->with('success', __('Child record updated successfully.'));
     }
 
     public function destroy(Child $child)
@@ -132,20 +152,23 @@ class ChildController extends Controller
             Storage::disk('s3')->delete($doc->file_path);
         }
         $child->delete();
-        return redirect()->route('children.index')->with('success', 'Child deleted successfully.');
+        return redirect()->route('children.index')->with('success', __('Child record deleted successfully.'));
     }
 
     public function destroyDocument(ChildDocument $document)
     {
         Storage::disk('s3')->delete($document->file_path);
         $document->delete();
-        return back()->with('success', 'Document deleted successfully.');
+        return back()->with('success', __('Document deleted successfully.'));
     }
 
 
     public function export(Request $request)
     {
-        return Excel::download(new ChildrenExport($request->search), 'children.xlsx');
+        if (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+        return Excel::download(new ChildrenExport($request->search, $request->asrama_id), 'data_anak_asrama.xlsx');
     }
 
     public function exportPdf(Child $child)
