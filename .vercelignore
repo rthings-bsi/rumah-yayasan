@@ -1,0 +1,13 @@
+/node_modules
+/tests
+/vendor/mpdf/mpdf/ttfonts
+/vendor/dompdf/dompdf/lib/res/fonts
+.git
+.github
+*.log
+CHANGELOG.md
+README.md
+phpunit.xml
+tailwind.config.js
+postcss.config.js
+vite.config.js
