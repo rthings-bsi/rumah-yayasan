@@ -188,10 +188,26 @@ class ChildController extends Controller
             }
         }
 
-        $pdf = Pdf::loadView('children.pdf', compact('child'))
-                  ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
+        $html = view('children.pdf', compact('child'))->render();
         
-        return $pdf->stream('child-profile-' . $child->registration_number . '.pdf');
+        $mpdf = new \Mpdf\Mpdf([
+            'tempDir' => '/tmp',
+            'margin_left' => 0,
+            'margin_right' => 0,
+            'margin_top' => 0,
+            'margin_bottom' => 0,
+            'format' => 'A4',
+            'default_font_size' => 11,
+            'default_font' => 'Helvetica'
+        ]);
+
+        $mpdf->SetDisplayMode('fullpage');
+        $mpdf->WriteHTML($html);
+        
+        return response($mpdf->Output('child-profile-' . $child->registration_number . '.pdf', 'S'), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="child-profile-' . $child->registration_number . '.pdf"'
+        ]);
     }
 
     public function generateRegistrationNumber(Request $request)
