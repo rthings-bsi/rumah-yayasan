@@ -4,8 +4,8 @@
     "functions": {
         "api/index.php": {
             "runtime": "vercel-php@0.9.0",
-            "memory": 1024,
-            "maxDuration": 60
+            "includeFiles": "public/build/**",
+            "excludeFiles": "{node_modules/**,tests/**,storage/logs/**,vendor/mpdf/mpdf/ttfonts/**}"
         }
     },
     "routes": [
