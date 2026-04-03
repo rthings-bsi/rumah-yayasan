@@ -8,6 +8,4 @@
 CHANGELOG.md
 README.md
 phpunit.xml
-tailwind.config.js
-postcss.config.js
-vite.config.js
+phpunit.xml
