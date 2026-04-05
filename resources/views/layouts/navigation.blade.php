@@ -213,7 +213,7 @@
                  x-transition:leave-end="opacity-0" 
                  class="flex-1 min-w-0">
                 <p class="text-sm font-semibold text-white truncate">{{ Auth::user()->name }}</p>
-                <p class="text-[11px] text-slate-500 truncate capitalize">{{ Auth::user()->role }} Account</p>
+                <p class="text-[11px] text-slate-500 truncate capitalize">{{ __(ucfirst(Auth::user()->role)) }} {{ __('Account') }}</p>
             </div>
             <div x-show="!sidebarCollapsed || isMobile" class="w-2 h-2 rounded-full bg-emerald-400"></div>
         </div>

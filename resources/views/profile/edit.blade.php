@@ -11,23 +11,23 @@
             <div class="absolute -top-24 -left-20 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full"></div>
             <div class="absolute -bottom-24 -right-20 w-64 h-64 bg-purple-500/10 blur-[100px] rounded-full"></div>
             
-            <div class="glass-card !p-8 !rounded-[2.5rem] bg-indigo-600 dark:bg-indigo-700 text-white relative overflow-hidden shadow-premium group">
+            <div class="glass-card !p-6 md:!p-8 !rounded-[2.5rem] bg-indigo-600 dark:bg-indigo-700 text-white relative overflow-hidden shadow-premium group">
                 <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                 
-                <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                    <div class="w-24 h-24 rounded-[2rem] bg-white text-indigo-600 flex items-center justify-center text-4xl font-black shadow-2xl shadow-indigo-900/20 ring-4 ring-white/20">
+                <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 md:gap-8">
+                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-[1.5rem] md:rounded-[2rem] bg-white text-indigo-600 flex items-center justify-center text-3xl md:text-4xl font-black shadow-2xl shadow-indigo-900/20 ring-4 ring-white/20">
                         {{ substr(Auth::user()->name, 0, 1) }}
                     </div>
                     <div class="text-center md:text-left">
-                        <h1 class="text-4xl font-black tracking-tight mb-2">{{ Auth::user()->name }}</h1>
-                        <div class="flex flex-wrap justify-center md:justify-start items-center gap-3">
-                            <span class="px-4 py-1.5 rounded-xl bg-white/20 backdrop-blur-md text-[10px] font-black uppercase tracking-widest">{{ Auth::user()->role }} {{ __('Account') }}</span>
-                            <span class="text-sm font-medium text-white/70">{{ Auth::user()->email }}</span>
+                        <h1 class="text-2xl md:text-4xl font-black tracking-tight mb-2">{{ Auth::user()->name }}</h1>
+                        <div class="flex flex-wrap justify-center md:justify-start items-center gap-2 md:gap-3">
+                            <span class="px-3 md:px-4 py-1 rounded-xl bg-white/20 backdrop-blur-md text-[9px] md:text-[10px] font-black uppercase tracking-widest">{{ Auth::user()->role }} {{ __('Account') }}</span>
+                            <span class="text-xs md:text-sm font-medium text-white/70">{{ Auth::user()->email }}</span>
                         </div>
                     </div>
-                    <div class="md:ml-auto flex items-center gap-2 px-4 py-2 rounded-2xl bg-black/20 backdrop-blur-md border border-white/10">
+                    <div class="md:ml-auto flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-2xl bg-black/20 backdrop-blur-md border border-white/10">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span class="text-[10px] font-black uppercase tracking-widest opacity-80">{{ __('Account Online') }}</span>
+                        <span class="text-[9px] md:text-[10px] font-black uppercase tracking-widest opacity-80">{{ __('Account Online') }}</span>
                     </div>
                 </div>
             </div>

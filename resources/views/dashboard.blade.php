@@ -7,13 +7,13 @@
 
     <div class="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
         {{-- Elite Hero Section --}}
-        <div class="relative mb-12 animate-fade-in">
+        <div class="relative mb-8 md:mb-12 animate-fade-in">
             <div class="absolute -top-24 -left-20 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full"></div>
             <div class="absolute -bottom-24 -right-20 w-64 h-64 bg-purple-500/10 blur-[100px] rounded-full"></div>
             
-            <div class="relative flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            <div class="relative flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-8">
                 <div>
-                    <h1 class="text-5xl font-black text-slate-800 dark:text-white tracking-tight leading-tight">
+                    <h1 class="text-3xl md:text-5xl font-black text-slate-800 dark:text-white tracking-tight leading-tight">
                         {{ __('Welcome back') }},<br/>
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">{{ Auth::user()->name }}</span>
                     </h1>

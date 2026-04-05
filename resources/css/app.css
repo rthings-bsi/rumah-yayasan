@@ -45,7 +45,7 @@
 @layer components {
     /* ===== PREMIUM FOUNDATIONS ===== */
     .glass-card {
-        @apply bg-white/95 backdrop-blur-xl border border-slate-200/80 rounded-[2rem] shadow-sm;
+        @apply bg-white/95 backdrop-blur-xl border border-slate-200/80 rounded-[2rem] shadow-sm p-5 md:p-8;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .dark .glass-card {
@@ -69,7 +69,7 @@
 
     /* ===== STAT CARD ===== */
     .stat-card {
-        @apply relative overflow-hidden bg-white rounded-2xl border border-slate-100 p-6;
+        @apply relative overflow-hidden bg-white rounded-2xl border border-slate-100 p-5 md:p-6;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .dark .stat-card {

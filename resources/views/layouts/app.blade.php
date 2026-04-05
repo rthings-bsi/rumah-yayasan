@@ -106,14 +106,9 @@
                 </header>
                 
                 <!-- Page Content -->
-                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50/80 dark:bg-slate-900/80 p-4 sm:p-6 lg:p-8"
+                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50/80 dark:bg-slate-900/80 p-4 md:p-6 lg:p-8"
                       x-data="{ pageLoaded: false }"
                       x-init="$nextTick(() => { setTimeout(() => pageLoaded = true, 80) })">
-                    <div class="sm:hidden mb-6">
-                        @isset($header)
-                            {{ $header }}
-                        @endisset
-                    </div>
 
                     <!-- Skeleton Placeholder -->
                     <div x-show="!pageLoaded" 

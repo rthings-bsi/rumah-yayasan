@@ -1,4 +1,8 @@
 <x-app-layout>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
     <x-slot name="header">
         <div class="flex items-center gap-2 text-sm">
             <a href="{{ route('children.index') }}" class="text-slate-500 hover:text-indigo-600 transition-colors">{{ __('Children Data') }}</a>
@@ -17,66 +21,80 @@
         $profilePhoto = $child->documents->where('document_type', 'profile_photo')->first();
     @endphp
 
-    <div class="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
+    <div x-data="{ activeTab: 'identity', fabOpen: false }" class="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
         {{-- Elite Profile Header --}}
         <div class="relative mb-12">
             <div class="absolute inset-x-0 bottom-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 dark:from-indigo-500/5 dark:to-purple-500/5 blur-3xl -z-10 rounded-full transform -translate-y-12 h-64"></div>
             
             <div class="glass-card overflow-hidden !rounded-[2.5rem] !bg-white/80 dark:!bg-slate-900/80 border-white/40 dark:border-slate-800/50 shadow-premium">
-                <div class="h-40 bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-800 relative overflow-hidden">
+                <div class="h-32 md:h-48 bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800 relative overflow-hidden">
                     {{-- Decorative pattern --}}
                     <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 24px 24px;"></div>
-                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-                    <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl"></div>
+                    <div class="absolute -right-16 -top-16 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+                    <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl"></div>
                 </div>
                 
-                <div class="px-8 pb-10">
-                    <div class="relative flex flex-col md:flex-row items-center md:items-end gap-8 -mt-16">
+                <div class="px-6 md:px-10 pb-8 md:pb-12">
+                    <div class="relative flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-10 -mt-16 md:mt-[-5rem]">
                         {{-- Avatar with Glow --}}
                         <div class="relative group">
-                            <div class="absolute inset-0 bg-indigo-500 blur-2xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                            <div class="relative w-40 h-40 rounded-[2.5rem] bg-white dark:bg-slate-800 p-1.5 shadow-2xl">
-                                <div class="w-full h-full rounded-[2.2rem] bg-gradient-to-br from-slate-50 to-slate-200 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center overflow-hidden border border-slate-100 dark:border-slate-600">
+                            <div class="absolute inset-x-0 -bottom-4 h-8 bg-indigo-900/20 blur-xl rounded-full opacity-40"></div>
+                            <div class="relative w-36 h-36 md:w-48 md:h-48 rounded-[2.5rem] md:rounded-[3.5rem] bg-white dark:bg-slate-800 p-1.5 md:p-2 shadow-2xl overflow-visible">
+                                <div class="w-full h-full rounded-[2.2rem] md:rounded-[3rem] bg-slate-50 dark:bg-slate-900 flex items-center justify-center overflow-hidden border border-slate-100 dark:border-slate-800 ring-4 ring-indigo-50/50 dark:ring-indigo-900/20">
                                     @if($profilePhoto)
                                         <img src="{{ Storage::disk('s3')->url($profilePhoto->file_path) }}" 
-                                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                             class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
                                              alt="{{ $child->full_name }}">
                                     @else
-                                        <span class="text-5xl font-black text-indigo-600 dark:text-indigo-400">
+                                        <span class="text-6xl font-black text-indigo-600 dark:text-indigo-400">
                                             {{ substr($child->full_name, 0, 1) }}
                                         </span>
                                     @endif
                                 </div>
-                                <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-emerald-500 border-4 border-white dark:border-slate-800 rounded-2xl shadow-lg flex items-center justify-center" title="Verified Member">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                {{-- Status indicator badge - better positioning --}}
+                                <div class="absolute -bottom-1 -right-1 md:bottom-2 md:right-2 w-10 h-10 md:w-12 md:h-12 bg-white dark:bg-slate-800 rounded-2xl shadow-xl flex items-center justify-center p-1 border-2 border-slate-50 dark:border-slate-700">
+                                    <div class="w-full h-full rounded-xl bg-emerald-500 flex items-center justify-center text-white">
+                                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         {{-- Identity --}}
-                        <div class="flex-1 text-center md:text-left pt-4">
-                            <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-2">
-                                <span class="badge-elite bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-100 dark:border-indigo-500/20">
-                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
-                                    {{ $child->registration_number }}
-                                </span>
-                                <span class="badge-elite 
-                                    {{ $child->enrollment_status == 'active' ? 'bg-emerald-50 text-emerald-600 border-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20' : '' }}
-                                    {{ $child->enrollment_status == 'graduated' ? 'bg-blue-50 text-blue-600 border-blue-100 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20' : '' }}
-                                    {{ $child->enrollment_status == 'withdrawn' ? 'bg-rose-50 text-rose-600 border-rose-100 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20' : '' }}">
-                                    <span class="w-1.5 h-1.5 rounded-full {{ $child->enrollment_status == 'active' ? 'bg-emerald-500' : ($child->enrollment_status == 'graduated' ? 'bg-blue-500' : 'bg-rose-500') }} animate-pulse"></span>
-                                    {{ ucfirst($child->enrollment_status) }}
-                                </span>
+                        <div class="flex-1 text-center md:text-left pt-2 md:pt-0">
+                            <div class="inline-flex flex-wrap items-center justify-center md:justify-start gap-2.5 mb-4">
+                                <div class="px-4 py-1.5 rounded-full bg-indigo-50/80 dark:bg-indigo-500/10 border border-indigo-100/50 dark:border-indigo-500/20 backdrop-blur-sm shadow-sm flex items-center gap-2">
+                                    <svg class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                                    <span class="text-[11px] font-black uppercase tracking-[0.1em] text-indigo-700 dark:text-indigo-300">{{ $child->registration_number }}</span>
+                                </div>
+                                <div class="px-4 py-1.5 rounded-full border backdrop-blur-sm shadow-sm flex items-center gap-2
+                                    {{ $child->enrollment_status == 'active' ? 'bg-emerald-50/80 text-emerald-700 border-emerald-100/50 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20' : '' }}
+                                    {{ $child->enrollment_status == 'graduated' ? 'bg-blue-50/80 text-blue-700 border-blue-100/50 dark:bg-blue-500/10 dark:text-blue-300 dark:border-blue-500/20' : '' }}
+                                    {{ $child->enrollment_status == 'withdrawn' ? 'bg-rose-50/80 text-rose-700 border-rose-100/50 dark:bg-rose-500/10 dark:text-rose-300 dark:border-rose-500/20' : '' }}">
+                                    <div class="w-1.5 h-1.5 rounded-full {{ $child->enrollment_status == 'active' ? 'bg-emerald-500' : ($child->enrollment_status == 'graduated' ? 'bg-blue-500' : 'bg-rose-500') }} animate-pulse"></div>
+                                    <span class="text-[11px] font-black uppercase tracking-[0.1em]">{{ ucfirst($child->enrollment_status) }}</span>
+                                </div>
                             </div>
-                            <h1 class="text-4xl font-black text-slate-800 dark:text-white tracking-tight drop-shadow-sm">{{ $child->full_name }}</h1>
-                            <p class="text-slate-500 dark:text-slate-400 mt-1 font-medium flex items-center justify-center md:justify-start gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                {{ $child->place_of_birth }}, {{ \Carbon\Carbon::parse($child->date_of_birth)->format('d F Y') }}
-                            </p>
+                            <h1 class="text-4xl md:text-5xl font-black text-slate-800 dark:text-white tracking-tight mb-2">{{ $child->full_name }}</h1>
+                            <div class="flex items-center justify-center md:justify-start gap-4 text-slate-500 dark:text-slate-400">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                    </div>
+                                    <span class="text-sm font-bold tracking-tight">{{ $child->place_of_birth }}</span>
+                                </div>
+                                <div class="w-1 h-1 rounded-full bg-slate-300 hidden md:block"></div>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-emerald-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                    <span class="text-sm font-bold tracking-tight">{{ \Carbon\Carbon::parse($child->date_of_birth)->translatedFormat('d F Y') }}</span>
+                                </div>
+                            </div>
                         </div>
-
-                        {{-- Actions --}}
-                        <div class="flex flex-wrap items-center justify-center gap-3">
+                        
+                        {{-- Actions: Mobile Hidden, using FAB instead --}}
+                        <div class="hidden md:flex flex-wrap items-center justify-center gap-3">
                             <a href="{{ route('children.pdf', $child) }}" target="_blank" class="btn btn-secondary !rounded-2xl group border-transparent bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700">
                                 <svg class="w-5 h-5 text-rose-500 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                                 <span class="hidden sm:inline">{{ __('Export') }}</span>
@@ -93,9 +111,9 @@
             </div>
         </div>
 
-        {{-- Quick Stats Grid --}}
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <div class="stat-card accent-indigo animate-fade-in-up delay-75">
+        {{-- Quick Stats: Scrollable on Mobile --}}
+        <div class="flex overflow-x-auto lg:grid lg:grid-cols-4 gap-6 mb-12 no-scrollbar -mx-4 px-4 lg:mx-0 lg:px-0 snap-x snap-mandatory">
+            <div class="stat-card accent-indigo animate-fade-in-up delay-75 shrink-0 w-[280px] lg:w-auto snap-start">
                 <div class="flex items-center gap-4">
                     <div class="icon-box indigo !w-14 !h-14 !rounded-2xl">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -107,7 +125,7 @@
                 </div>
             </div>
             
-            <div class="stat-card accent-emerald animate-fade-in-up delay-150">
+            <div class="stat-card accent-emerald animate-fade-in-up delay-150 shrink-0 w-[280px] lg:w-auto snap-start">
                 <div class="flex items-center gap-4">
                     <div class="icon-box emerald !w-14 !h-14 !rounded-2xl">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
@@ -119,7 +137,7 @@
                 </div>
             </div>
 
-            <div class="stat-card accent-blue animate-fade-in-up delay-225">
+            <div class="stat-card accent-blue animate-fade-in-up delay-225 shrink-0 w-[280px] lg:w-auto snap-start">
                 <div class="flex items-center gap-4">
                     <div class="icon-box blue !w-14 !h-14 !rounded-2xl">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -131,7 +149,7 @@
                 </div>
             </div>
 
-            <div class="stat-card accent-amber animate-fade-in-up delay-300">
+            <div class="stat-card accent-amber animate-fade-in-up delay-300 shrink-0 w-[280px] lg:w-auto snap-start">
                 <div class="flex items-center gap-4">
                     <div class="icon-box amber !w-14 !h-14 !rounded-2xl">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
@@ -142,13 +160,40 @@
                     </div>
                 </div>
             </div>
+            
+            {{-- Scroll Indicator --}}
+            <div class="flex lg:hidden justify-center gap-1.5 mt-4">
+                <div class="w-4 h-1 rounded-full bg-indigo-600"></div>
+                <div class="w-1 h-1 rounded-full bg-slate-300"></div>
+                <div class="w-1 h-1 rounded-full bg-slate-300"></div>
+            </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 relative">
             {{-- Left Column: Information --}}
-            <div class="lg:col-span-2 space-y-12">
-                {{-- Biological & Legal Identity --}}
-                <div class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-8 border-transparent animate-fade-in-up delay-150">
+            <div class="lg:col-span-2">
+                {{-- Mobile Tab Switcher --}}
+                <div class="flex lg:hidden overflow-x-auto no-scrollbar bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl mb-6 gap-1 sticky top-4 z-40 shadow-lg border border-white/20 dark:border-slate-700/50">
+                    <button @click="activeTab = 'identity'" :class="activeTab === 'identity' ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-500'" class="flex-1 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap">
+                        {{ __('Identity') }}
+                    </button>
+                    <button @click="activeTab = 'family'" :class="activeTab === 'family' ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-500'" class="flex-1 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap">
+                        {{ __('Family') }}
+                    </button>
+                    <button @click="activeTab = 'academic'" :class="activeTab === 'academic' ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-500'" class="flex-1 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap">
+                        {{ __('Academic') }}
+                    </button>
+                    <button @click="activeTab = 'history'" :class="activeTab === 'history' ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-500'" class="flex-1 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap">
+                        {{ __('History') }}
+                    </button>
+                    <button @click="activeTab = 'documents'" :class="activeTab === 'documents' ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-500'" class="flex-1 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap">
+                        {{ __('Documents') }}
+                    </button>
+                </div>
+
+                <div class="space-y-12">
+                    {{-- Biological & Legal Identity --}}
+                    <div x-show="activeTab === 'identity'" class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-6 md:p-8 border-transparent animate-fade-in-up lg:!block">
                     <div class="flex items-center gap-4 mb-8">
                         <div class="icon-box indigo shadow-lg shadow-indigo-500/10">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
@@ -176,8 +221,8 @@
                     </div>
                 </div>
 
-                {{-- Family & Guardianship --}}
-                <div class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-8 border-transparent animate-fade-in-up delay-200">
+                    {{-- Family & Guardianship --}}
+                    <div x-show="activeTab === 'family'" class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-6 md:p-8 border-transparent animate-fade-in-up lg:!block">
                     <div class="flex items-center gap-4 mb-8">
                         <div class="icon-box sky shadow-lg shadow-sky-500/10">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
@@ -205,8 +250,8 @@
                     </div>
                 </div>
 
-                {{-- Academic & Education --}}
-                <div class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-8 border-transparent animate-fade-in-up delay-[250ms]">
+                    {{-- Academic & Education --}}
+                    <div x-show="activeTab === 'academic'" class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-6 md:p-8 border-transparent animate-fade-in-up lg:!block">
                     <div class="flex items-center gap-4 mb-8">
                         <div class="icon-box violet shadow-lg shadow-violet-500/10">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4 2.222"></path></svg>
@@ -241,8 +286,8 @@
                     </div>
                 </div>
 
-                {{-- Administrative History --}}
-                <div class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-8 border-transparent animate-fade-in-up delay-300">
+                    {{-- Administrative History --}}
+                    <div x-show="activeTab === 'history'" class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-6 md:p-8 border-transparent animate-fade-in-up lg:!block">
                     <div class="flex items-center gap-4 mb-8">
                         <div class="icon-box emerald shadow-lg shadow-emerald-500/10">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -270,8 +315,10 @@
                     </div>
                 </div>
 
+                </div>
+
                 {{-- Legal Documents --}}
-                <div class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-8 border-transparent animate-fade-in-up delay-300">
+                <div x-show="activeTab === 'documents'" class="glass-card !bg-white/50 dark:!bg-slate-900/50 p-6 md:p-8 border-transparent animate-fade-in-up lg:!block">
                     <div class="flex items-center justify-between mb-8">
                         <div class="flex items-center gap-4">
                             <div class="icon-box amber shadow-lg shadow-amber-500/10">
@@ -284,9 +331,9 @@
                         </span>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="flex overflow-x-auto sm:grid sm:grid-cols-2 gap-6 no-scrollbar snap-x snap-mandatory pb-4">
                         @forelse($child->documents as $doc)
-                            <div class="group relative rounded-3xl border border-slate-200/50 dark:border-slate-700/50 bg-white dark:bg-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
+                            <div class="group relative rounded-3xl border border-slate-200/50 dark:border-slate-700/50 bg-white dark:bg-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden shrink-0 w-[280px] sm:w-auto snap-start">
                                 <div class="aspect-[4/3] bg-slate-50 dark:bg-slate-900 flex items-center justify-center relative overflow-hidden border-b border-slate-100 dark:border-slate-700">
                                     @if(in_array(strtolower(pathinfo($doc->file_path, PATHINFO_EXTENSION)), ['jpg','jpeg','png']))
                                         <img src="{{ Storage::disk('s3')->url($doc->file_path) }}" alt="{{ $doc->document_type }}" 
@@ -412,6 +459,43 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    {{-- Mobile Floating Action Button (FAB) --}}
+    <div class="fixed bottom-8 right-6 z-50 md:hidden">
+        {{-- FAB Menu --}}
+        <div x-show="fabOpen" 
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-4 scale-95"
+             class="absolute bottom-20 right-0 space-y-4">
+            
+            <a href="{{ route('children.pdf', $child) }}" target="_blank" class="flex items-center gap-3 bg-white dark:bg-slate-800 px-6 py-3 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700">
+                <span class="text-xs font-black uppercase tracking-widest text-slate-800 dark:text-white">{{ __('Export PDF') }}</span>
+                <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-500/10 flex items-center justify-center text-rose-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                </div>
+            </a>
+
+            @if(auth()->user()->role === 'admin')
+            <a href="{{ route('children.edit', $child) }}" class="flex items-center gap-3 bg-indigo-600 px-6 py-3 rounded-2xl shadow-xl shadow-indigo-500/20">
+                <span class="text-xs font-black uppercase tracking-widest text-white">{{ __('Edit Profile') }}</span>
+                <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                </div>
+            </a>
+            @endif
+        </div>
+
+        {{-- Main FAB Toggle --}}
+        <button @click="fabOpen = !fabOpen" 
+                class="w-16 h-16 bg-indigo-600 rounded-3xl shadow-2xl flex items-center justify-center text-white transform active:scale-95 transition-all">
+            <svg x-show="!fabOpen" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            <svg x-show="fabOpen" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
     </div>
 
 </x-app-layout>
