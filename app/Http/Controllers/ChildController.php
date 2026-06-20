@@ -19,12 +19,22 @@ class ChildController extends Controller
 
         $search = $request->search;
         if ($request->filled('search')) {
-            $query->where('full_name', 'like', "%{$search}%")
-                  ->orWhere('registration_number', 'like', "%{$search}%");
+            $query->where(function($q) use ($search) {
+                $q->whereRaw('LOWER(full_name) LIKE ?', ["%".strtolower($search)."%"])
+                  ->orWhereRaw('LOWER(registration_number) LIKE ?', ["%".strtolower($search)."%"]);
+            });
         }
 
         if ($request->filled('asrama_id')) {
             $query->where('asrama_id', $request->asrama_id);
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        if ($request->filled('enrollment_status')) {
+            $query->where('enrollment_status', $request->enrollment_status);
         }
 
         $children = $query->paginate(15)->withQueryString();
@@ -40,10 +50,11 @@ class ChildController extends Controller
         return view('children.index', compact('children', 'search', 'asramas', 'stats'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $asramas = Asrama::orderBy('kode_asrama')->get();
-        return view('children.create', compact('asramas'));
+        $selected_asrama_id = $request->asrama_id;
+        return view('children.create', compact('asramas', 'selected_asrama_id'));
     }
 
     public function store(Request $request)
@@ -78,8 +89,7 @@ class ChildController extends Controller
         if ($request->has('documents')) {
             foreach ($request->file('documents') as $key => $fileData) {
                 if (isset($fileData['file'])) {
-                    // UBAH DISINI: Ganti 'public' menjadi 's3' agar tersimpan di Supabase
-                    $path = $fileData['file']->store('documents', 's3');
+                    $path = $fileData['file']->store('documents', 'public');
                     $child->documents()->create([
                         'document_type' => $request->documents[$key]['type'],
                         'file_path'     => $path
@@ -132,8 +142,7 @@ class ChildController extends Controller
         if ($request->has('documents')) {
             foreach ($request->file('documents') as $key => $fileData) {
                 if (isset($fileData['file'])) {
-                    // UBAH DISINI: Ganti 'public' menjadi 's3'
-                    $path = $fileData['file']->store('documents', 's3');
+                    $path = $fileData['file']->store('documents', 'public');
                     $child->documents()->create([
                         'document_type' => $request->documents[$key]['type'],
                         'file_path'     => $path
@@ -148,8 +157,7 @@ class ChildController extends Controller
     public function destroy(Child $child)
     {
         foreach ($child->documents as $doc) {
-            // UBAH DISINI: Hapus file dari disk s3 (Supabase)
-            Storage::disk('s3')->delete($doc->file_path);
+            Storage::disk('public')->delete($doc->file_path);
         }
         $child->delete();
         return redirect()->route('children.index')->with('success', __('Child record deleted successfully.'));
@@ -157,7 +165,7 @@ class ChildController extends Controller
 
     public function destroyDocument(ChildDocument $document)
     {
-        Storage::disk('s3')->delete($document->file_path);
+        Storage::disk('public')->delete($document->file_path);
         $document->delete();
         return back()->with('success', __('Document deleted successfully.'));
     }
@@ -176,13 +184,12 @@ class ChildController extends Controller
         $child->load('documents');
 
         foreach ($child->documents as $doc) {
-            // UBAH DISINI: Mengambil gambar base64 langsung dari S3 Supabase
             $path = $doc->file_path;
             
-            if (Storage::disk('s3')->exists($path)) {
+            if (Storage::disk('public')->exists($path)) {
                 $ext = pathinfo($path, PATHINFO_EXTENSION);
                 if (in_array(strtolower($ext), ['jpg', 'jpeg', 'png'])) {
-                    $fileContent = Storage::disk('s3')->get($path);
+                    $fileContent = Storage::disk('public')->get($path);
                     $doc->base64_image = 'data:image/' . $ext . ';base64,' . base64_encode($fileContent);
                 }
             }
@@ -208,6 +215,26 @@ class ChildController extends Controller
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="child-profile-' . $child->registration_number . '.pdf"'
         ]);
+    }
+
+    public function idCard(Child $child)
+    {
+        $child->load('documents', 'asrama');
+
+        // Prepare base64 image for the profile photo to ensure it renders correctly in print
+        $profilePhoto = $child->documents->firstWhere('document_type', 'profile_photo');
+        if ($profilePhoto) {
+            $path = $profilePhoto->file_path;
+            if (Storage::disk('public')->exists($path)) {
+                $ext = pathinfo($path, PATHINFO_EXTENSION);
+                if (in_array(strtolower($ext), ['jpg', 'jpeg', 'png'])) {
+                    $fileContent = Storage::disk('public')->get($path);
+                    $profilePhoto->base64_image = 'data:image/' . $ext . ';base64,' . base64_encode($fileContent);
+                }
+            }
+        }
+
+        return view('children.id-card', compact('child'));
     }
 
     public function generateRegistrationNumber(Request $request)

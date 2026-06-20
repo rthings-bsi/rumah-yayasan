@@ -8,14 +8,14 @@
     <div class="max-w-5xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
         {{-- Profile Hero Section --}}
         <div class="relative mb-12 animate-fade-in">
-            <div class="absolute -top-24 -left-20 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full"></div>
+            <div class="absolute -top-24 -left-20 w-64 h-64 bg-green-500/10 blur-[100px] rounded-full"></div>
             <div class="absolute -bottom-24 -right-20 w-64 h-64 bg-purple-500/10 blur-[100px] rounded-full"></div>
             
-            <div class="glass-card !p-6 md:!p-8 !rounded-[2.5rem] bg-indigo-600 dark:bg-indigo-700 text-white relative overflow-hidden shadow-premium group">
+            <div class="glass-card !p-6 md:!p-8 !rounded-[2.5rem] bg-green-600 dark:bg-green-700 text-white relative overflow-hidden shadow-premium group">
                 <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                 
                 <div class="relative z-10 flex flex-col md:flex-row items-center gap-6 md:gap-8">
-                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-[1.5rem] md:rounded-[2rem] bg-white text-indigo-600 flex items-center justify-center text-3xl md:text-4xl font-black shadow-2xl shadow-indigo-900/20 ring-4 ring-white/20">
+                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-[1.5rem] md:rounded-[2rem] bg-white text-green-600 flex items-center justify-center text-3xl md:text-4xl font-black shadow-2xl shadow-green-900/20 ring-4 ring-white/20">
                         {{ substr(Auth::user()->name, 0, 1) }}
                     </div>
                     <div class="text-center md:text-left">
@@ -37,7 +37,7 @@
             {{-- Profile Information Section --}}
             <div class="glass-card !p-0 !rounded-[2.5rem] bg-white/80 dark:bg-slate-900/80 border-white/40 dark:border-slate-800/50 shadow-premium animate-fade-in-up delay-150">
                 <div class="p-8 border-b border-slate-100 dark:border-slate-800/50 flex items-center gap-4">
-                    <div class="icon-box indigo !w-12 !h-12 !rounded-2xl shadow-lg shadow-indigo-500/10">
+                    <div class="icon-box green !w-12 !h-12 !rounded-2xl shadow-lg shadow-green-500/10">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                     </div>
                     <div>

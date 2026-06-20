@@ -10,13 +10,11 @@ class RoleMiddleware
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        if (!auth()->check() || auth()->user()->role !== $role) {
-            abort(403, 'Unauthorized access.');
+        if (!auth()->check() || !in_array(auth()->user()->role, $roles)) {
+            abort(403, 'Akses ditolak. Anda tidak memiliki izin yang diperlukan.');
         }
 
         return $next($request);

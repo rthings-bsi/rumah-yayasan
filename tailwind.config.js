@@ -15,6 +15,22 @@ export default {
 
     theme: {
         extend: {
+            screens: {
+                'xs': '480px',
+                // sm: 640px (default)
+                // md: 768px (default)
+                // lg: 1024px (default)
+                // xl: 1280px (default)
+                // 2xl: 1536px (default)
+            },
+            colors: {
+                brand: {
+                    DEFAULT: '#16a34a', // More vibrant Green 600
+                    primary: '#16a34a',
+                    dark: '#14532d',    // Deep green
+                    accent: '#fbbf24',
+                }
+            },
             fontFamily: {
                 sans: ['Inter', 'Open Sans', ...defaultTheme.fontFamily.sans],
             },

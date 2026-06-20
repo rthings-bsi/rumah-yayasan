@@ -39,7 +39,7 @@
         </div>
 
         <div class="md:col-span-2 flex items-center gap-4 mt-4 pt-6 border-t border-slate-100 dark:border-slate-800/50">
-            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-indigo-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-green-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
                 {{ __('Commit Changes') }}
             </button>
 

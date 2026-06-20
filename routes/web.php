@@ -6,10 +6,22 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\AsramaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\ApprovalController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\Admin\AdminBeritaController;
+use App\Http\Controllers\Admin\AdminProgramController;
+use App\Http\Controllers\Admin\AdminGalleryController;
+use App\Http\Controllers\Admin\AdminSettingController;
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+// Public Pages
+Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/tentang-kami', [PageController::class, 'about'])->name('tentang');
+Route::get('/program', [PageController::class, 'programs'])->name('program');
+Route::get('/berita', [PageController::class, 'blog'])->name('berita');
+Route::get('/berita/{slug}', [PageController::class, 'blogShow'])->name('berita.detail');
+Route::get('/kontak', [PageController::class, 'contact'])->name('kontak');
+Route::get('/galeri', [PageController::class, 'gallery'])->name('galeri');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -22,6 +34,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('asramas', AsramaController::class)->except(['index', 'show']);
         Route::resource('users', UserController::class);
         Route::delete('/children/documents/{document}', [ChildController::class, 'destroyDocument'])->name('children.documents.destroy');
+
+        // Content Management Routes
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::resource('berita', AdminBeritaController::class);
+            Route::resource('programs', AdminProgramController::class);
+            Route::resource('galleries', AdminGalleryController::class);
+            Route::get('settings', [AdminSettingController::class, 'index'])->name('settings.index');
+            Route::put('settings', [AdminSettingController::class, 'update'])->name('settings.update');
+        });
     });
 
 
@@ -31,10 +52,50 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/children/generate-registration-number', [ChildController::class, 'generateRegistrationNumber'])->name('children.generate_registration_number');
     Route::get('/children/{child}', [ChildController::class, 'show'])->name('children.show');
     Route::get('/children/{child}/pdf', [ChildController::class, 'exportPdf'])->name('children.pdf');
+    Route::get('/children/{child}/id-card', [ChildController::class, 'idCard'])->name('children.id_card');
 
     // Asrama Routes (accessible by all)
     Route::get('/asramas', [AsramaController::class, 'index'])->name('asramas.index');
     Route::get('/asramas/{asrama}', [AsramaController::class, 'show'])->name('asramas.show');
+
+    // Laporan Keuangan Routes
+    Route::prefix('laporan')->name('laporan.')->group(function () {
+        Route::get('/', [LaporanController::class, 'index'])->name('index');
+        Route::get('/create', [LaporanController::class, 'create'])->name('create');
+        Route::post('/', [LaporanController::class, 'store'])->name('store');
+        Route::get('/{laporan}', [LaporanController::class, 'show'])->name('show');
+        Route::get('/{laporan}/edit', [LaporanController::class, 'edit'])->name('edit');
+        Route::put('/{laporan}', [LaporanController::class, 'update'])->name('update');
+
+        // Item management (only in draft)
+        Route::post('/{laporan}/expense-item', [LaporanController::class, 'addExpenseItem'])->name('expense_item.store');
+        Route::delete('/{laporan}/expense-item/{item}', [LaporanController::class, 'removeExpenseItem'])->name('expense_item.destroy');
+        Route::post('/{laporan}/reimbursement-item', [LaporanController::class, 'addReimbursementItem'])->name('reimbursement_item.store');
+        Route::delete('/{laporan}/reimbursement-item/{item}', [LaporanController::class, 'removeReimbursementItem'])->name('reimbursement_item.destroy');
+
+        // Submit for approval
+        Route::post('/{laporan}/submit', [LaporanController::class, 'submit'])->name('submit');
+    });
+
+    // Approval Routes
+    Route::prefix('approval')->name('approval.')->group(function () {
+        // Finance approval page
+        Route::get('/finance', [ApprovalController::class, 'financeIndex'])
+            ->name('finance.index');
+        Route::post('/finance/{laporan}/approve', [ApprovalController::class, 'financeApprove'])
+            ->name('finance.approve');
+
+        // Director approval page
+        Route::get('/director', [ApprovalController::class, 'directorIndex'])
+            ->name('director.index');
+        Route::post('/director/{laporan}/approve', [ApprovalController::class, 'directorApprove'])
+            ->name('director.approve');
+
+        // Reject (shared)
+        Route::post('/{laporan}/reject', [ApprovalController::class, 'reject'])
+            ->name('reject');
+    });
+
     Route::get('/language/{locale}', [\App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');
 });
 

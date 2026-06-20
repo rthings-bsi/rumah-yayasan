@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-            <a href="{{ route('dashboard') }}" class="hover:text-indigo-600 transition-colors">{{ __('Dashboard') }}</a>
+            <a href="{{ route('dashboard') }}" class="hover:text-green-600 transition-colors">{{ __('Dashboard') }}</a>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            <a href="{{ route('users.index') }}" class="hover:text-indigo-600 transition-colors">{{ __('Manage Users') }}</a>
+            <a href="{{ route('users.index') }}" class="hover:text-green-600 transition-colors">{{ __('Manage Users') }}</a>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
             <span class="font-semibold text-slate-800 dark:text-slate-100">{{ __('Create New User') }}</span>
         </div>
@@ -24,7 +24,7 @@
                     {{-- Identity Section --}}
                     <div class="space-y-6">
                         <div class="flex items-center gap-3 pb-4 border-b border-slate-100 dark:border-slate-800/50">
-                            <div class="icon-box indigo !w-10 !h-10 !rounded-xl">
+                            <div class="icon-box green !w-10 !h-10 !rounded-xl">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                             </div>
                             <h3 class="text-lg font-black text-slate-800 dark:text-white uppercase tracking-tight">{{ __('Account Identity') }}</h3>
@@ -85,7 +85,7 @@
                         <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                         {{ __('Discard Changes') }}
                     </a>
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-indigo-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-green-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
                         {{ __('Initialize Account') }}
                     </button>
                 </div>

@@ -23,4 +23,14 @@ class Asrama extends Model
     {
         return $this->hasMany(Child::class)->where('enrollment_status', 'active');
     }
+
+    public function expenseReports()
+    {
+        return $this->hasMany(AsramaExpenseReport::class);
+    }
+
+    public function monthlyBudgets()
+    {
+        return $this->hasMany(AsramaMonthlyBudget::class);
+    }
 }

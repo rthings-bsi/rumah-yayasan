@@ -5,363 +5,390 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Yayasan') }} — Login</title>
+        <title>{{ config('app.name', 'Yayasan Rumah Harapan') }} — Login</title>
         <meta name="description" content="Login to Rumah Harapan management system">
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <script src="https://unpkg.com/lucide@latest"></script>
 
         <style>
-            /* ===== Login Page Specific Styles ===== */
-            .login-bg {
-                background: linear-gradient(135deg, #0c0a1a 0%, #151030 25%, #1a1145 50%, #0f172a 100%);
-                position: relative;
+            body {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                background-color: #f8fafc;
             }
 
-            /* Mesh gradient overlay */
-            .login-bg::before {
-                content: '';
+            /* ===== Background Premium & Berdimensi ===== */
+            .bg-elegant {
+                background-color: #f8fafc;
+                position: relative;
+                overflow: hidden;
+            }
+
+            /* Ambient Glow (Aurora Effect) */
+            .ambient-glow {
+                position: absolute;
+                width: 60vw;
+                height: 60vw;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+                top: -20%;
+                left: -15%;
+                filter: blur(60px);
+                animation: floatAura 15s ease-in-out infinite alternate;
+                z-index: 0;
+            }
+
+            .ambient-glow-2 {
+                position: absolute;
+                width: 50vw;
+                height: 50vw;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(20, 184, 166, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+                bottom: -15%;
+                right: -10%;
+                filter: blur(60px);
+                animation: floatAura2 18s ease-in-out infinite alternate;
+                z-index: 0;
+            }
+
+            /* Tekstur Titik Halus (Dot Pattern) */
+            .bg-texture {
                 position: absolute;
                 inset: 0;
-                background:
-                    radial-gradient(ellipse 80% 60% at 10% 90%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
-                    radial-gradient(ellipse 60% 50% at 90% 10%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
-                    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(79, 70, 229, 0.08) 0%, transparent 50%);
+                background-image: radial-gradient(rgba(148, 163, 184, 0.2) 1px, transparent 1px);
+                background-size: 32px 32px;
+                z-index: 1;
+                /* Masking agar tekstur hanya terlihat di pinggir, memudar di tengah */
+                mask-image: radial-gradient(ellipse at center, transparent 30%, black 100%);
+                -webkit-mask-image: radial-gradient(ellipse at center, transparent 30%, black 100%);
                 pointer-events: none;
             }
 
-            /* Animated grid pattern */
-            .grid-pattern {
+            /* Objek Kaca Melayang (Floating Glass) */
+            .glass-shape {
                 position: absolute;
-                inset: 0;
-                background-image:
-                    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-                background-size: 60px 60px;
-                mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-                -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-            }
-
-            /* Floating orbs */
-            @keyframes orbFloat1 {
-                0%, 100% { transform: translate(0, 0) scale(1); }
-                25% { transform: translate(30px, -40px) scale(1.05); }
-                50% { transform: translate(-20px, -80px) scale(0.95); }
-                75% { transform: translate(40px, -30px) scale(1.02); }
-            }
-            @keyframes orbFloat2 {
-                0%, 100% { transform: translate(0, 0) scale(1); }
-                33% { transform: translate(-50px, 30px) scale(1.1); }
-                66% { transform: translate(30px, -50px) scale(0.9); }
-            }
-            @keyframes orbFloat3 {
-                0%, 100% { transform: translate(0, 0); }
-                50% { transform: translate(60px, 40px); }
-            }
-
-            .orb-1 {
-                position: absolute;
-                width: 300px;
-                height: 300px;
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 100%);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.8);
                 border-radius: 50%;
-                background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(99, 102, 241, 0) 70%);
-                filter: blur(60px);
-                animation: orbFloat1 12s ease-in-out infinite;
-                top: -5%;
-                right: -5%;
-            }
-            .orb-2 {
-                position: absolute;
-                width: 400px;
-                height: 400px;
-                border-radius: 50%;
-                background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0) 70%);
-                filter: blur(80px);
-                animation: orbFloat2 15s ease-in-out infinite;
-                bottom: -10%;
-                left: -10%;
-            }
-            .orb-3 {
-                position: absolute;
-                width: 200px;
-                height: 200px;
-                border-radius: 50%;
-                background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0) 70%);
-                filter: blur(40px);
-                animation: orbFloat3 10s ease-in-out infinite;
-                top: 40%;
-                left: 30%;
+                z-index: 2;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
             }
 
-            /* Glowing ring */
-            @keyframes ringPulse {
-                0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-                50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.05); }
-            }
-            .glow-ring {
-                position: absolute;
-                width: 500px;
-                height: 500px;
-                border-radius: 50%;
-                border: 1px solid rgba(99, 102, 241, 0.1);
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                animation: ringPulse 4s ease-in-out infinite;
-            }
-            .glow-ring::after {
-                content: '';
-                position: absolute;
-                inset: 30px;
-                border-radius: 50%;
-                border: 1px solid rgba(139, 92, 246, 0.08);
+            .shape-1 {
+                width: 140px;
+                height: 140px;
+                top: 15%;
+                right: 18%;
+                animation: floatObj 8s ease-in-out infinite;
             }
 
-            /* Card animations */
-            @keyframes cardReveal {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px) scale(0.96);
-                    filter: blur(10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0) scale(1);
-                    filter: blur(0);
-                }
-            }
-            @keyframes brandReveal {
-                from {
-                    opacity: 0;
-                    transform: translateY(-20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            @keyframes footerReveal {
-                from { opacity: 0; }
-                to { opacity: 1; }
+            .shape-2 {
+                width: 80px;
+                height: 80px;
+                bottom: 25%;
+                left: 15%;
+                animation: floatObj 12s ease-in-out infinite reverse;
             }
 
-            .animate-card-reveal {
-                animation: cardReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            }
-            .animate-brand-reveal {
-                animation: brandReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            }
-            .animate-footer-reveal {
-                animation: footerReveal 0.5s ease-out 0.5s forwards;
-                opacity: 0;
+            @keyframes floatAura {
+                0% { transform: translate(0, 0) scale(1); }
+                100% { transform: translate(5%, 5%) scale(1.1); }
             }
 
-            /* Login card glass effect */
-            .login-card {
-                background: rgba(255, 255, 255, 0.04);
-                backdrop-filter: blur(40px);
-                -webkit-backdrop-filter: blur(40px);
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                border-radius: 1.5rem;
-                box-shadow:
-                    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-                    0 25px 50px -12px rgba(0, 0, 0, 0.4),
-                    0 0 80px rgba(99, 102, 241, 0.06);
+            @keyframes floatAura2 {
+                0% { transform: translate(0, 0) scale(1); }
+                100% { transform: translate(-5%, -5%) scale(1.15); }
+            }
+
+            @keyframes floatObj {
+                0% { transform: translateY(0) scale(1); }
+                50% { transform: translateY(-25px) scale(1.02); }
+                100% { transform: translateY(0) scale(1); }
+            }
+
+            /* ===== Kartu Login Glassmorphism ===== */
+            .glass-card {
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(25px);
+                -webkit-backdrop-filter: blur(25px);
+                border: 1px solid rgba(255, 255, 255, 1);
+                box-shadow: 0 25px 50px -12px rgba(22, 163, 74, 0.08), 
+                            0 0 15px rgba(0, 0, 0, 0.02);
+                border-radius: 28px;
+                z-index: 10;
                 position: relative;
-                overflow: hidden;
-            }
-            .login-card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 1px;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
             }
 
-            /* Inner form card — dark mode */
-            .login-form-inner {
-                background: rgba(15, 23, 42, 0.8);
-                backdrop-filter: blur(20px);
-                border-radius: 1rem;
-                border: 1px solid rgba(255, 255, 255, 0.06);
-                box-shadow:
-                    0 4px 6px -1px rgba(0, 0, 0, 0.3),
-                    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+            /* ===== Input & Floating Label UX ===== */
+            .input-group {
+                position: relative;
+                margin-bottom: 1.5rem;
             }
 
-            /* Input styling — dark mode */
-            .login-input {
+            .input-field {
                 width: 100%;
-                padding: 0.75rem 1rem;
-                padding-left: 2.75rem;
-                border: 1.5px solid rgba(255, 255, 255, 0.1);
-                border-radius: 0.875rem;
-                background: rgba(255, 255, 255, 0.05);
-                color: #e2e8f0;
-                font-size: 0.875rem;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                padding: 1rem 1rem 1rem 3rem;
+                font-size: 0.95rem;
+                color: #1e293b;
+                background: #ffffff;
+                border: 1.5px solid #e2e8f0;
+                border-radius: 14px;
+                transition: all 0.3s ease;
                 outline: none;
-            }
-            .login-input::placeholder {
-                color: #64748b;
-            }
-            .login-input:focus {
-                border-color: #818cf8;
-                background: rgba(255, 255, 255, 0.08);
-                box-shadow:
-                    0 0 0 3px rgba(99, 102, 241, 0.15),
-                    0 1px 2px rgba(0, 0, 0, 0.2);
-            }
-            .login-input:hover:not(:focus) {
-                border-color: rgba(255, 255, 255, 0.15);
-                background: rgba(255, 255, 255, 0.07);
+                box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
             }
 
-            /* Login button */
-            .login-btn {
-                width: 100%;
-                padding: 0.75rem 1.5rem;
-                background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #4338ca 100%);
-                color: white;
+            .input-field:focus {
+                border-color: #16a34a;
+                box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.1), inset 0 2px 4px rgba(0,0,0,0.01);
+            }
+
+            .input-icon {
+                position: absolute;
+                left: 1.125rem;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #94a3b8;
+                transition: color 0.3s ease;
+                pointer-events: none;
+            }
+
+            .input-field:focus ~ .input-icon,
+            .input-field:not(:placeholder-shown) ~ .input-icon {
+                color: #16a34a;
+            }
+
+            .floating-label {
+                position: absolute;
+                left: 3rem;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #94a3b8;
+                font-size: 0.95rem;
+                pointer-events: none;
+                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                background: transparent;
+            }
+
+            .input-field:focus ~ .floating-label,
+            .input-field:not(:placeholder-shown) ~ .floating-label {
+                top: 0;
+                left: 1rem;
+                font-size: 0.75rem;
                 font-weight: 600;
-                font-size: 0.875rem;
-                border-radius: 0.875rem;
+                color: #16a34a;
+                background: #ffffff;
+                padding: 0 0.5rem;
+                transform: translateY(-50%);
+                border-radius: 4px;
+            }
+
+            /* ===== Fitur Lihat Password ===== */
+            .password-toggle {
+                position: absolute;
+                right: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+                background: none;
                 border: none;
+                color: #94a3b8;
+                cursor: pointer;
+                transition: color 0.2s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.25rem;
+            }
+            .password-toggle:hover {
+                color: #16a34a;
+            }
+
+            /* ===== Custom Checkbox UX ===== */
+            .checkbox-wrapper {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                gap: 0.5rem;
+            }
+            .custom-checkbox {
+                appearance: none;
+                width: 1.25rem;
+                height: 1.25rem;
+                border: 2px solid #cbd5e1;
+                border-radius: 6px;
+                background-color: white;
                 cursor: pointer;
                 position: relative;
-                overflow: hidden;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow:
-                    0 4px 15px rgba(99, 102, 241, 0.35),
-                    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-                letter-spacing: 0.025em;
-            }
-            .login-btn:hover {
-                transform: translateY(-2px);
-                box-shadow:
-                    0 8px 25px rgba(99, 102, 241, 0.45),
-                    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-                background: linear-gradient(135deg, #818cf8 0%, #6366f1 50%, #4f46e5 100%);
-            }
-            .login-btn:active {
-                transform: translateY(0);
-                box-shadow:
-                    0 2px 10px rgba(99, 102, 241, 0.3),
-                    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-            }
-            .login-btn::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-                transition: left 0.5s ease;
-            }
-            .login-btn:hover::after {
-                left: 100%;
-            }
-
-            /* Divider line — dark mode */
-            .divider-line {
-                height: 1px;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            }
-
-            /* Checkbox styling — dark mode */
-            .login-checkbox {
-                width: 1rem;
-                height: 1rem;
-                border-radius: 0.375rem;
-                border: 1.5px solid rgba(255, 255, 255, 0.2);
-                background: rgba(255, 255, 255, 0.05);
-                accent-color: #818cf8;
-                cursor: pointer;
                 transition: all 0.2s ease;
             }
-            .login-checkbox:checked {
-                border-color: #818cf8;
+            .custom-checkbox:checked {
+                background-color: #16a34a;
+                border-color: #16a34a;
+            }
+            .custom-checkbox:checked::after {
+                content: '';
+                position: absolute;
+                left: 6px;
+                top: 2px;
+                width: 5px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 2px 2px 0;
+                transform: rotate(45deg);
             }
 
-            /* Particles */
-            @keyframes particleFade {
-                0%, 100% { opacity: 0; }
-                50% { opacity: 1; }
+            /* ===== Tombol Login ===== */
+            .btn-primary {
+                background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+                color: white;
+                font-weight: 600;
+                border-radius: 14px;
+                padding: 0.875rem 1.5rem;
+                width: 100%;
+                border: none;
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
             }
-            .particle {
-                position: absolute;
-                width: 2px;
-                height: 2px;
-                background: rgba(165, 180, 252, 0.4);
-                border-radius: 50%;
-                animation: particleFade 3s ease-in-out infinite;
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35);
+            }
+            .btn-primary:active {
+                transform: translateY(1px);
+            }
+
+            /* Animasi masuk elemen */
+            .animate-fade-in {
+                animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            @keyframes fadeInUp {
+                to { opacity: 1; transform: translateY(0); }
             }
         </style>
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen flex flex-col justify-center items-center px-4 py-8 login-bg">
+    <body class="text-slate-800">
+        <div class="min-h-screen flex flex-col justify-center items-center px-4 py-8 bg-elegant">
+            
+            <div class="ambient-glow"></div>
+            <div class="ambient-glow-2"></div>
+            <div class="bg-texture"></div>
+            <div class="glass-shape shape-1"></div>
+            <div class="glass-shape shape-2"></div>
 
-            <!-- Background effects -->
-            <div class="grid-pattern"></div>
-            <div class="orb-1"></div>
-            <div class="orb-2"></div>
-            <div class="orb-3"></div>
-            <div class="glow-ring"></div>
-
-            <!-- Particles -->
-            <div class="particle" style="top: 15%; left: 20%; animation-delay: 0s;"></div>
-            <div class="particle" style="top: 25%; left: 80%; animation-delay: 0.8s;"></div>
-            <div class="particle" style="top: 60%; left: 15%; animation-delay: 1.5s;"></div>
-            <div class="particle" style="top: 75%; left: 70%; animation-delay: 2.2s;"></div>
-            <div class="particle" style="top: 40%; left: 90%; animation-delay: 0.4s;"></div>
-            <div class="particle" style="top: 85%; left: 40%; animation-delay: 1.8s;"></div>
-
-            <!-- Branding -->
-            <div class="relative mb-10 animate-brand-reveal">
-                <div class="flex flex-col items-center gap-4">
-                    <div class="relative">
-                        <!-- Logo glow -->
-                        <div class="absolute inset-0 bg-indigo-500/30 rounded-2xl blur-xl scale-150"></div>
-                        <div class="relative p-3 bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10">
-                            <x-application-logo class="w-12 h-12" />
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <h1 class="text-white text-2xl font-bold tracking-tight">Rumah Harapan</h1>
-                        <p class="text-indigo-300/70 text-sm mt-1 font-light tracking-wide">Management System</p>
-                    </div>
+            <div class="text-center mb-8 animate-fade-in relative z-10" style="animation-delay: 0.1s;">
+                <div class="inline-flex items-center justify-center p-3.5 bg-white rounded-2xl shadow-sm border border-slate-100 mb-4 ring-4 ring-white/50 backdrop-blur-sm">
+                    <x-application-logo class="w-12 h-12 text-green-600" />
                 </div>
+                <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Rumah Harapan</h1>
+                <p class="text-slate-500 text-sm font-medium mt-1">Sistem Manajemen Terpadu</p>
             </div>
 
-            <!-- Login Card -->
-            <div class="w-full max-w-md relative animate-card-reveal" style="animation-delay: 150ms; opacity: 0; animation-fill-mode: forwards;">
-                <div class="login-card p-1.5">
-                    <div class="login-form-inner px-8 py-8">
-                        <!-- Card Header -->
-                        <div class="text-center mb-7">
-                            <h2 class="text-xl font-bold text-white tracking-tight">Selamat Datang</h2>
-                            <p class="text-slate-500 text-sm mt-1.5">Masuk ke akun Anda untuk melanjutkan</p>
-                        </div>
-
-                        <!-- Session Status -->
-                        <x-auth-session-status class="mb-4" :status="session('status')" />
-
-                        {{ $slot }}
-                    </div>
+            <div class="w-full max-w-md glass-card p-8 sm:p-10 animate-fade-in" style="animation-delay: 0.2s;">
+                
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-slate-800 tracking-tight">Selamat Datang</h2>
+                    <p class="text-sm text-slate-500 mt-1.5">Silakan masuk menggunakan kredensial Anda.</p>
                 </div>
+
+                <x-auth-session-status class="mb-4" :status="session('status')" />
+
+                <form method="POST" action="{{ route('login') }}" id="loginForm">
+                    @csrf
+
+                    <div class="input-group">
+                        <input type="email" id="email" name="email" class="input-field" placeholder=" " required autofocus autocomplete="username" value="{{ old('email') }}">
+                        <i data-lucide="mail" class="input-icon w-5 h-5"></i>
+                        <label for="email" class="floating-label">Alamat Email</label>
+                        <x-input-error :messages="$errors->get('email')" class="mt-2 text-xs text-red-500" />
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" class="input-field" placeholder=" " required autocomplete="current-password">
+                        <i data-lucide="lock" class="input-icon w-5 h-5"></i>
+                        <label for="password" class="floating-label">Kata Sandi</label>
+                        <button type="button" class="password-toggle" id="togglePassword" aria-label="Toggle password visibility">
+                            <i data-lucide="eye" class="w-5 h-5" id="eyeIcon"></i>
+                        </button>
+                        <x-input-error :messages="$errors->get('password')" class="mt-2 text-xs text-red-500" />
+                    </div>
+
+                    <div class="flex items-center justify-between mb-8">
+                        <label for="remember_me" class="checkbox-wrapper">
+                            <input id="remember_me" type="checkbox" class="custom-checkbox" name="remember">
+                            <span class="text-sm text-slate-600 font-medium select-none">Ingat saya</span>
+                        </label>
+
+                        @if (Route::has('password.request'))
+                            <a class="text-sm font-semibold text-green-600 hover:text-green-700 hover:underline transition-all" href="{{ route('password.request') }}">
+                                Lupa sandi?
+                            </a>
+                        @endif
+                    </div>
+
+                    <button type="submit" class="btn-primary group" id="submitBtn">
+                        <span id="btnText">Masuk ke Sistem</span>
+                        <i data-lucide="arrow-right" id="btnIcon" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </form>
             </div>
 
-            <!-- Footer -->
-            <p class="relative text-indigo-300/40 text-xs mt-10 animate-footer-reveal tracking-wide">
-                &copy; {{ date('Y') }} Rumah Harapan &mdash; All rights reserved.
-            </p>
+            <div class="mt-10 text-center animate-fade-in relative z-10" style="animation-delay: 0.3s;">
+                <p class="text-sm text-slate-500 font-medium tracking-wide">
+                    &copy; {{ date('Y') }} Yayasan Rumah Harapan. <br class="sm:hidden">Semua hak dilindungi.
+                </p>
+            </div>
         </div>
+
+        <script>
+            // Inisialisasi Icon
+            lucide.createIcons();
+
+            // Toggle Show/Hide Password
+            const togglePassword = document.querySelector('#togglePassword');
+            const passwordInput = document.querySelector('#password');
+            const eyeIcon = document.querySelector('#eyeIcon');
+
+            togglePassword.addEventListener('click', function () {
+                const isPassword = passwordInput.getAttribute('type') === 'password';
+                passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+                
+                eyeIcon.setAttribute('data-lucide', isPassword ? 'eye-off' : 'eye');
+                lucide.createIcons();
+            });
+
+            // State Loading Saat Form Disubmit
+            const loginForm = document.getElementById('loginForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+
+            loginForm.addEventListener('submit', function() {
+                btnIcon.style.display = 'none';
+                submitBtn.style.opacity = '0.85';
+                submitBtn.style.cursor = 'not-allowed';
+                btnText.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Memproses...
+                    </div>
+                `;
+            });
+        </script>
     </body>
 </html>

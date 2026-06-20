@@ -13,7 +13,7 @@
                     {{ __('Manajemen Asrama') }}
                 </h1>
                 <p class="text-slate-500 dark:text-slate-400 mt-2 flex items-center gap-2">
-                    <span class="w-8 h-px bg-indigo-500/30"></span>
+                    <span class="w-8 h-px bg-green-500/30"></span>
                     {{ __('Kelola dan pantau persebaran anak di tiap hunian.') }}
                 </p>
             </div>
@@ -53,11 +53,11 @@
 
         {{-- Stats Summary --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-            <div class="stat-card accent-indigo animate-fade-in-up">
+            <div class="stat-card accent-green animate-fade-in-up">
                 <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">{{ __('Total Asrama') }}</p>
                 <div class="flex items-end justify-between mt-2">
                     <p class="text-3xl font-black text-slate-800 dark:text-white">{{ $asramas->count() }}</p>
-                    <div class="icon-box indigo opacity-50"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div>
+                    <div class="icon-box green opacity-50"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div>
                 </div>
             </div>
             <div class="stat-card accent-emerald animate-fade-in-up delay-75">
@@ -125,14 +125,14 @@
 
                             <a href="{{ route('asramas.show', $asrama) }}" class="p-6 flex-1 flex flex-col">
                                 <div class="flex items-center gap-4 mb-5">
-                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform duration-500">
+                                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-green-500/20 group-hover:scale-110 transition-transform duration-500">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                                         </svg>
                                     </div>
                                     <div>
-                                        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500 dark:text-indigo-400">{{ $asrama->kode_asrama }}</span>
-                                        <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                                        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-green-500 dark:text-green-400">{{ $asrama->kode_asrama }}</span>
+                                        <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                                             {{ $asrama->nama_asrama }}
                                         </h3>
                                     </div>
@@ -145,7 +145,7 @@
                                             <span class="text-xs font-bold text-slate-700 dark:text-slate-200">{{ $asrama->active_children_count }} / {{ $asrama->children_count }}</span>
                                         </div>
                                         <div class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-1000" 
+                                            <div class="h-full bg-gradient-to-r from-green-500 to-purple-500 rounded-full transition-all duration-1000" 
                                                  style="width: {{ $asrama->children_count > 0 ? ($asrama->active_children_count / $asrama->children_count) * 100 : 0 }}%"></div>
                                         </div>
                                     </div>
@@ -158,12 +158,12 @@
                                                 </div>
                                             @endfor
                                             @if($asrama->children_count > 3)
-                                                <div class="w-6 h-6 rounded-full border-2 border-white dark:border-slate-800 bg-indigo-50 dark:bg-indigo-500/20 flex items-center justify-center text-[8px] font-bold text-indigo-600 dark:text-indigo-400">
+                                                <div class="w-6 h-6 rounded-full border-2 border-white dark:border-slate-800 bg-green-50 dark:bg-green-500/20 flex items-center justify-center text-[8px] font-bold text-green-600 dark:text-green-400">
                                                     +{{ $asrama->children_count - 3 }}
                                                 </div>
                                             @endif
                                         </div>
-                                        <span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors">
+                                        <span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 group-hover:text-green-500 transition-colors">
                                             {{ __('Lihat Detail') }} &rarr;
                                         </span>
                                     </div>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-2 text-sm animate-fade-in">
-            <a href="{{ route('asramas.index') }}" class="text-slate-500 hover:text-indigo-600 transition-colors font-medium">{{ __('Data Asrama') }}</a>
+            <a href="{{ route('asramas.index') }}" class="text-slate-500 hover:text-green-600 transition-colors font-medium">{{ __('Data Asrama') }}</a>
             <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
             <span class="font-bold text-slate-800 dark:text-slate-100">{{ $asrama->kode_asrama }}</span>
         </div>
@@ -10,18 +10,18 @@
     <div class="max-w-7xl mx-auto" x-data="{ childSearch: '' }">
         {{-- Profile Header --}}
         <div class="glass-card overflow-hidden mb-8 animate-fade-in-up">
-            <div class="h-32 bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 relative">
+            <div class="h-32 bg-gradient-to-r from-green-600 via-green-500 to-purple-600 relative">
                 <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_1px_1px,#fff_1px,transparent_0)] [background-size:20px_20px]"></div>
             </div>
             <div class="px-8 pb-8 flex flex-col md:flex-row items-end gap-6 -mt-12 relative z-10">
-                <div class="w-32 h-32 rounded-3xl bg-white dark:bg-slate-800 p-2 shadow-2xl shadow-indigo-500/20">
-                    <div class="w-full h-full rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white">
+                <div class="w-32 h-32 rounded-3xl bg-white dark:bg-slate-800 p-2 shadow-2xl shadow-green-500/20">
+                    <div class="w-full h-full rounded-2xl bg-gradient-to-br from-green-500 to-purple-600 flex items-center justify-center text-white">
                         <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     </div>
                 </div>
                 <div class="flex-1 mb-2">
                     <div class="flex items-center gap-3">
-                        <span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-black rounded-lg uppercase tracking-widest border border-indigo-100 dark:border-indigo-500/20">
+                        <span class="px-3 py-1 bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 text-xs font-black rounded-lg uppercase tracking-widest border border-green-100 dark:border-green-500/20">
                             {{ $asrama->kode_asrama }}
                         </span>
                         @if(auth()->user()->role === 'admin')
@@ -33,11 +33,11 @@
                     <h1 class="text-3xl font-black text-slate-900 dark:text-white mt-1">{{ $asrama->nama_asrama }}</h1>
                 </div>
                 <div class="flex gap-3 mb-2">
-                    <a href="{{ route('children.export', ['asrama_id' => $asrama->id]) }}" class="btn btn-secondary shadow-indigo-500/10 h-12 flex items-center gap-2 !bg-emerald-600 hover:!bg-emerald-700 !text-white !border-none">
+                    <a href="{{ route('children.export', ['asrama_id' => $asrama->id]) }}" class="btn btn-secondary shadow-green-500/10 h-12 flex items-center gap-2 !bg-emerald-600 hover:!bg-emerald-700 !text-white !border-none">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         {{ __('Download Excel') }}
                     </a>
-                    <a href="{{ route('children.create', ['asrama_id' => $asrama->id]) }}" class="btn btn-primary shadow-indigo-500/10 h-12">
+                    <a href="{{ route('children.create', ['asrama_id' => $asrama->id]) }}" class="btn btn-primary shadow-green-500/10 h-12">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                         {{ __('Tambah Anak Ke Sini') }}
                     </a>
@@ -47,11 +47,11 @@
 
         {{-- Stats Grid --}}
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-            <div class="stat-card accent-indigo animate-fade-in-up delay-75">
+            <div class="stat-card accent-green animate-fade-in-up delay-75">
                 <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">{{ __('Total Penghuni') }}</p>
                 <div class="flex items-center justify-between mt-3">
                     <p class="text-4xl font-black text-slate-800 dark:text-white">{{ $asrama->children_count }}</p>
-                    <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-500">
+                    <div class="w-12 h-12 rounded-2xl bg-green-500/10 flex items-center justify-center text-green-500">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
         <div class="content-card overflow-hidden animate-fade-in-up delay-300">
             <div class="content-card-header flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-50/50 dark:bg-white/5">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-white dark:bg-slate-700 shadow-sm flex items-center justify-center text-indigo-500">
+                    <div class="w-10 h-10 rounded-xl bg-white dark:bg-slate-700 shadow-sm flex items-center justify-center text-green-500">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     </div>
                     <h3 class="section-title text-base">{{ __('Daftar Penghuni Asrama') }}</h3>
@@ -118,16 +118,16 @@
                             <tbody>
                                 @foreach($children as $child)
                                     <tr x-show="!childSearch || '{{ strtolower($child->full_name) }}'.includes(childSearch.toLowerCase())"
-                                        class="hover:bg-indigo-50/30 dark:hover:bg-indigo-500/5 transition-colors group">
+                                        class="hover:bg-green-50/30 dark:hover:bg-green-500/5 transition-colors group">
                                         <td class="pl-8">
                                             <span class="font-mono text-[10px] font-black bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 px-2 py-1 rounded-md">{{ $child->registration_number }}</span>
                                         </td>
                                         <td>
                                             <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-black">
+                                                <div class="w-8 h-8 rounded-full bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400 flex items-center justify-center text-xs font-black">
                                                     {{ substr($child->full_name, 0, 1) }}
                                                 </div>
-                                                <span class="font-bold text-slate-700 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors uppercase tracking-tight text-xs">{{ $child->full_name }}</span>
+                                                <span class="font-bold text-slate-700 dark:text-slate-200 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors uppercase tracking-tight text-xs">{{ $child->full_name }}</span>
                                             </div>
                                         </td>
                                         <td>
@@ -143,7 +143,7 @@
                                             </span>
                                         </td>
                                         <td class="pr-8 text-right">
-                                            <a href="{{ route('children.show', $child) }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-500 hover:text-indigo-700 transition-colors">
+                                            <a href="{{ route('children.show', $child) }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-green-500 hover:text-green-700 transition-colors">
                                                 <span>{{ __('Lihat') }}</span>
                                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7-7 7"></path></svg>
                                             </a>

@@ -8,14 +8,14 @@
     <div class="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
         {{-- Elite Hero Section --}}
         <div class="relative mb-8 md:mb-12 animate-fade-in">
-            <div class="absolute -top-24 -left-20 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full"></div>
-            <div class="absolute -bottom-24 -right-20 w-64 h-64 bg-purple-500/10 blur-[100px] rounded-full"></div>
+            <div class="absolute -top-24 -left-20 w-64 h-64 bg-green-500/10 blur-[100px] rounded-full"></div>
+            <div class="absolute -bottom-24 -right-20 w-64 h-64 bg-emerald-500/10 blur-[100px] rounded-full"></div>
             
             <div class="relative flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-8">
                 <div>
                     <h1 class="text-3xl md:text-5xl font-black text-slate-800 dark:text-white tracking-tight leading-tight">
                         {{ __('Welcome back') }},<br/>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">{{ Auth::user()->name }}</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400">{{ Auth::user()->name }}</span>
                     </h1>
                     <div class="flex items-center gap-3 mt-4">
                         <div class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/50 dark:bg-slate-800/50 border border-white/20 dark:border-slate-700/50 backdrop-blur-sm shadow-sm ring-1 ring-slate-100 dark:ring-slate-800/50">
@@ -36,13 +36,13 @@
 
         {{-- Premium Stats Grid --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <div class="stat-card accent-indigo animate-fade-in-up shadow-premium">
+            <div class="stat-card accent-green animate-fade-in-up shadow-premium">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{{ __('Total Children') }}</p>
                         <h3 class="text-3xl font-black text-slate-800 dark:text-white tracking-tight">{{ $stats['total'] }}</h3>
                     </div>
-                    <div class="icon-box indigo !w-14 !h-14 !rounded-2xl shadow-lg shadow-indigo-500/10">
+                    <div class="icon-box green !w-14 !h-14 !rounded-2xl shadow-lg shadow-green-500/10">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                     </div>
                 </div>
@@ -58,24 +58,24 @@
                     </div>
                 </div>
             </div>
-            <div class="stat-card accent-blue animate-fade-in-up delay-150 shadow-premium">
+            <div class="stat-card accent-teal animate-fade-in-up delay-150 shadow-premium">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{{ __('Graduated') }}</p>
                         <h3 class="text-3xl font-black text-slate-800 dark:text-white tracking-tight">{{ $stats['graduated'] }}</h3>
                     </div>
-                    <div class="icon-box blue !w-14 !h-14 !rounded-2xl shadow-lg shadow-blue-500/10">
+                    <div class="icon-box teal !w-14 !h-14 !rounded-2xl shadow-lg shadow-teal-500/10">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"></path></svg>
                     </div>
                 </div>
             </div>
-            <div class="stat-card accent-rose animate-fade-in-up delay-225 shadow-premium">
+            <div class="stat-card accent-amber animate-fade-in-up delay-225 shadow-premium">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{{ __('Total Asrama') }}</p>
                         <h3 class="text-3xl font-black text-slate-800 dark:text-white tracking-tight">{{ $stats['total_asrama'] }}</h3>
                     </div>
-                    <div class="icon-box rose !w-14 !h-14 !rounded-2xl shadow-lg shadow-rose-500/10">
+                    <div class="icon-box amber !w-14 !h-14 !rounded-2xl shadow-lg shadow-amber-500/10">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     </div>
                 </div>
@@ -101,10 +101,10 @@
                         @if(count($stats['by_category']) > 0)
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 @foreach($stats['by_category'] as $category => $count)
-                                    <div class="group relative flex items-center justify-between p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-indigo-500/30 transition-all duration-300">
+                                    <div class="group relative flex items-center justify-between p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-green-500/30 transition-all duration-300">
                                         <div class="flex items-center gap-4">
                                             <div class="w-3 h-10 rounded-full 
-                                                @if($category == 'fatherless') bg-indigo-500
+                                                @if($category == 'fatherless') bg-green-500
                                                 @elseif($category == 'motherless') bg-pink-500
                                                 @elseif($category == 'orphan') bg-amber-500
                                                 @elseif($category == 'underprivileged') bg-emerald-500
@@ -116,7 +116,7 @@
                                                 <span class="text- base font-black text-slate-800 dark:text-white uppercase tracking-tight">{{ __($category) }}</span>
                                             </div>
                                         </div>
-                                        <div class="text-3xl font-black text-slate-300 dark:text-slate-600 group-hover:text-indigo-500 transition-colors">
+                                        <div class="text-3xl font-black text-slate-300 dark:text-slate-600 group-hover:text-green-500 transition-colors">
                                             {{ sprintf("%02d", $count) }}
                                         </div>
                                     </div>
@@ -136,7 +136,7 @@
 
             {{-- Quick Access Section --}}
             <div class="space-y-6 animate-fade-in-up delay-[450ms]">
-                <div class="glass-card !rounded-[2.5rem] !bg-slate-800 dark:!bg-indigo-600 p-8 text-white relative overflow-hidden shadow-xl shadow-indigo-500/20 group">
+                <div class="glass-card !rounded-[2.5rem] !bg-slate-800 dark:!bg-green-600 p-8 text-white relative overflow-hidden shadow-xl shadow-green-500/20 group">
                     <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700"></div>
                     <div class="relative z-10">
                         <p class="text-[10px] font-black uppercase tracking-[0.3em] text-white/60 mb-2">{{ __('Quick Access') }}</p>
