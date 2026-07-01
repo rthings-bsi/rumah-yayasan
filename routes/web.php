@@ -9,47 +9,34 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\Admin\AdminBeritaController;
-use App\Http\Controllers\Admin\AdminProgramController;
-use App\Http\Controllers\Admin\AdminGalleryController;
-use App\Http\Controllers\Admin\AdminSettingController;
 
 // Public Pages
 Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/tentang-kami', [PageController::class, 'about'])->name('tentang');
-Route::get('/program', [PageController::class, 'programs'])->name('program');
-Route::get('/berita', [PageController::class, 'blog'])->name('berita');
-Route::get('/berita/{slug}', [PageController::class, 'blogShow'])->name('berita.detail');
-Route::get('/kontak', [PageController::class, 'contact'])->name('kontak');
-Route::get('/galeri', [PageController::class, 'gallery'])->name('galeri');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+use App\Http\Controllers\RoleController;
+
+Route::get('/children/generate-registration-number', [ChildController::class, 'generateRegistrationNumber'])->name('children.generate_registration_number');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // Admin only routes
     Route::middleware('role:admin')->group(function () {
         Route::resource('children', ChildController::class)->except(['index', 'show']);
         Route::resource('asramas', AsramaController::class)->except(['index', 'show']);
+        Route::delete('/asramas/{asrama}/foto', [AsramaController::class, 'deleteFoto'])->name('asramas.delete_foto');
         Route::resource('users', UserController::class);
+        Route::resource('roles', RoleController::class);
         Route::delete('/children/documents/{document}', [ChildController::class, 'destroyDocument'])->name('children.documents.destroy');
-
-        // Content Management Routes
-        Route::prefix('admin')->name('admin.')->group(function () {
-            Route::resource('berita', AdminBeritaController::class);
-            Route::resource('programs', AdminProgramController::class);
-            Route::resource('galleries', AdminGalleryController::class);
-            Route::get('settings', [AdminSettingController::class, 'index'])->name('settings.index');
-            Route::put('settings', [AdminSettingController::class, 'update'])->name('settings.update');
-        });
     });
 
 
     // Accessible by User and Admin
     Route::get('/children', [ChildController::class, 'index'])->name('children.index');
     Route::get('/children/export', [ChildController::class, 'export'])->name('children.export');
-    Route::get('/children/generate-registration-number', [ChildController::class, 'generateRegistrationNumber'])->name('children.generate_registration_number');
+    
     Route::get('/children/{child}', [ChildController::class, 'show'])->name('children.show');
     Route::get('/children/{child}/pdf', [ChildController::class, 'exportPdf'])->name('children.pdf');
     Route::get('/children/{child}/id-card', [ChildController::class, 'idCard'])->name('children.id_card');

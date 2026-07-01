@@ -248,7 +248,10 @@ class ChildController extends Controller
             return response()->json(['registration_number' => '']);
         }
 
-        $asrama = Asrama::findOrFail($asramaId);
+        $asrama = Asrama::find($asramaId);
+        if (!$asrama) {
+            return response()->json(['registration_number' => '']);
+        }
         $prefix = $asrama->kode_asrama;
 
         // Count children in this asrama registered in this month and year
